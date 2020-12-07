@@ -127,5 +127,8 @@
       }
     }
   },
-  "defaultProject": "homez"
+  "defaultProject": "homez",
+  "cli": {
+    "analytics": false
+  }
 }
