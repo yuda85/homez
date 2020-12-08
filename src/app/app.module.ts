@@ -9,6 +9,10 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { HeaderComponent } from './components/header/header.component';
 import { MaterialModule } from './material/material.module';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { LoginComponent } from './components/login/login.component';
+import { NgxsModule } from '@ngxs/store/src/module';
+import { AppState } from './state/app-state';
 
 const firebaseUiAuthConfig: firebaseui.auth.Config = {
   signInFlow: 'popup',
@@ -27,7 +31,7 @@ const firebaseUiAuthConfig: firebaseui.auth.Config = {
   credentialHelper: firebaseui.auth.CredentialHelper.GOOGLE_YOLO,
 };
 @NgModule({
-  declarations: [AppComponent, HeaderComponent],
+  declarations: [AppComponent, HeaderComponent, LoginComponent],
   imports: [
     BrowserModule,
     FormsModule,
@@ -36,6 +40,8 @@ const firebaseUiAuthConfig: firebaseui.auth.Config = {
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
     FirebaseUIModule.forRoot(firebaseUiAuthConfig),
+    FlexLayoutModule,
+    NgxsModule.forRoot(AppState),
   ],
   providers: [],
   bootstrap: [AppComponent],
