@@ -11,7 +11,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { MaterialModule } from './material/material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { LoginComponent } from './components/login/login.component';
-import { NgxsModule } from '@ngxs/store/src/module';
+import { NgxsModule } from '@ngxs/store';
 import { AppState } from './state/app-state';
 
 const firebaseUiAuthConfig: firebaseui.auth.Config = {

@@ -1,4 +1,4 @@
-import { State } from '@ngxs/store/src/decorators/state';
+import { State, StateContext, Action } from '@ngxs/store';
 import { GlobalStateModel } from './global.model';
 
 @State<GlobalStateModel>({
