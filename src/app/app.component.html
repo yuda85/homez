@@ -1,7 +1,10 @@
+<app-header></app-header>
 <firebase-ui></firebase-ui>
 
 <h1>
   <a href="https://www.npmjs.com/package/firebaseui-angular"
     >Link to npm angular fire base auth</a
   >
+
+  <button *ngIf="isLoggedIn() | async" (click)="logout()">Logout</button>
 </h1>

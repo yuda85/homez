@@ -7,6 +7,8 @@ import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import { HeaderComponent } from './components/header/header.component';
+import { MaterialModule } from './material/material.module';
 
 const firebaseUiAuthConfig: firebaseui.auth.Config = {
   signInFlow: 'popup',
@@ -19,25 +21,18 @@ const firebaseUiAuthConfig: firebaseui.auth.Config = {
       },
       provider: firebase.auth.FacebookAuthProvider.PROVIDER_ID,
     },
-    firebase.auth.TwitterAuthProvider.PROVIDER_ID,
-    firebase.auth.GithubAuthProvider.PROVIDER_ID,
-    {
-      requireDisplayName: false,
-      provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
-    },
-    firebase.auth.PhoneAuthProvider.PROVIDER_ID,
-    firebaseui.auth.AnonymousAuthProvider.PROVIDER_ID,
   ],
   tosUrl: '<your-tos-link>',
   privacyPolicyUrl: '<your-privacyPolicyUrl-link>',
   credentialHelper: firebaseui.auth.CredentialHelper.GOOGLE_YOLO,
 };
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, HeaderComponent],
   imports: [
     BrowserModule,
     FormsModule,
     AppRoutingModule,
+    MaterialModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
     FirebaseUIModule.forRoot(firebaseUiAuthConfig),
