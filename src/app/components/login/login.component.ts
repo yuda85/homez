@@ -35,6 +35,5 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   public successCallback(event: FirebaseUISignInSuccessWithAuthResult) {
     console.log(event);
-    this.router.navigate(['/']);
   }
 }

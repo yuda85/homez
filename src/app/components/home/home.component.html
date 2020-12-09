@@ -1,0 +1,59 @@
+<div class="home-container">
+  <div class="home-container__card">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>תכנון</mat-card-title>
+        <mat-card-subtitle>מה עושים לפני התחלת הבניה</mat-card-subtitle>
+      </mat-card-header>
+      <img mat-card-image src="../../../assets/images/plan.jpg" alt="Plan" />
+      <mat-card-actions>
+        <button mat-button>כנס לתכנון</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+  <div class="home-container__card">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>בניה</mat-card-title>
+        <mat-card-subtitle>ניהול שלב הבניה</mat-card-subtitle>
+      </mat-card-header>
+      <img
+        mat-card-image
+        src="../../../assets/images/construction.jpg"
+        alt="Plan"
+      />
+      <mat-card-actions>
+        <button mat-button>כנס לבניה</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+  <div class="home-container__card">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>פיניש</mat-card-title>
+        <mat-card-subtitle>ניהול שלבי סיום הבניה</mat-card-subtitle>
+      </mat-card-header>
+      <img mat-card-image src="../../../assets/images/finish.jpg" alt="Plan" />
+      <mat-card-actions>
+        <button mat-button>כנס לפיניש</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+  <div class="home-container__card">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>הוצאות</mat-card-title>
+        <mat-card-subtitle
+          >ניהול כלל ההוצאות על הבניה לפי שלבים</mat-card-subtitle
+        >
+      </mat-card-header>
+
+      <img mat-card-image src="../../../assets/images/budget.jpg" alt="Plan" />
+      <mat-card-actions>
+        <button (click)="onExpensesClick()" mat-button>
+          כנס לניהול הוצאות
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>

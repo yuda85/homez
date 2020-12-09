@@ -1,7 +1,7 @@
 import { Injectable, Provider } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -9,9 +9,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class AuthService {
   public user: any;
 
-  private isLoggedInSubject$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-    false
-  );
+  private isLoggedInSubject$: Subject<boolean> = new Subject<boolean>();
 
   constructor(public afAuth: AngularFireAuth, public router: Router) {
     this.afAuth.authState.subscribe((user) => {
@@ -35,5 +33,6 @@ export class AuthService {
     await this.afAuth.signOut();
     localStorage.removeItem('user');
     this.isLoggedInSubject$.next(false);
+    this.router.navigate(['/']);
   }
 }

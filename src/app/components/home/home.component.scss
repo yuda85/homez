@@ -1,0 +1,10 @@
+.home-container {
+  display: flex;
+  justify-content: space-evenly;
+  max-width: 80%;
+  margin: 0 auto;
+  &__card {
+    margin: 5px;
+    flex: 1;
+  }
+}
