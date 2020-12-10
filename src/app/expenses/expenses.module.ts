@@ -6,10 +6,17 @@ import { ExpensesContainerComponent } from './components/expenses-container/expe
 import { NewExpenseComponent } from './components/new-expense/new-expense.component';
 import { ExpensesTableComponent } from './components/expenses-table/expenses-table.component';
 import { LogExpensesComponent } from './components/log-expenses/log-expenses.component';
+import { FormsModule } from '@angular/forms';
+import { MaterialModule } from '../material/material.module';
 
 @NgModule({
-  declarations: [ExpensesContainerComponent, NewExpenseComponent, ExpensesTableComponent, LogExpensesComponent],
-  imports: [CommonModule, ExpensesRoutingModule],
+  declarations: [
+    ExpensesContainerComponent,
+    NewExpenseComponent,
+    ExpensesTableComponent,
+    LogExpensesComponent,
+  ],
+  imports: [CommonModule, ExpensesRoutingModule, FormsModule, MaterialModule],
   exports: [ExpensesContainerComponent],
 })
 export class ExpensesModule {}

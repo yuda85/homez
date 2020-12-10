@@ -11,7 +11,7 @@ const routes: Routes = [
     component: ExpensesContainerComponent,
   },
   {
-    path: 'new-expense',
+    path: 'new',
     component: LogExpensesComponent,
   },
 ];

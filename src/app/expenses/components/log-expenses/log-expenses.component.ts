@@ -13,11 +13,11 @@ export class LogExpensesComponent implements OnInit, OnDestroy {
   categories: string[] = this.loginService.getCurrentCategories();
   types: string[] = expense_types;
   expenseObj: Expense = {
-    name: null as any,
-    date: null as any,
-    category: null as any,
-    type: null as any,
-    amount: null as any,
+    name: null,
+    date: null,
+    category: null,
+    type: null,
+    amount: null,
     comments: '',
   };
   isLoading = false;
@@ -33,7 +33,9 @@ export class LogExpensesComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    debugger;
+  }
 
   updateExpenseCategories(category: string) {
     this.categories = this.loginService.getCurrentCategories();

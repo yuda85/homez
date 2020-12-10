@@ -19,6 +19,8 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+
 const MaterialModules = [
   MatButtonModule,
   MatIconModule,
@@ -40,6 +42,7 @@ const MaterialModules = [
   MatPaginatorModule,
   MatSnackBarModule,
   MatIconModule,
+  MatProgressBarModule,
 ];
 
 @NgModule({
