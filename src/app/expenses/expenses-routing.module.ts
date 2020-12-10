@@ -2,6 +2,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ExpensesContainerComponent } from './components/expenses-container/expenses-container.component';
+import { LogExpensesComponent } from './components/log-expenses/log-expenses.component';
 import { NewExpenseComponent } from './components/new-expense/new-expense.component';
 
 const routes: Routes = [
@@ -11,7 +12,7 @@ const routes: Routes = [
   },
   {
     path: 'new-expense',
-    component: NewExpenseComponent,
+    component: LogExpensesComponent,
   },
 ];
 

@@ -43,6 +43,8 @@ const firebaseUiAuthConfig: firebaseui.auth.Config = {
     FirebaseUIModule.forRoot(firebaseUiAuthConfig),
     FlexLayoutModule,
     NgxsModule.forRoot(AppState),
+    FormsModule,
+    MaterialModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
