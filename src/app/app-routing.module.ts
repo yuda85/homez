@@ -11,7 +11,6 @@ const routes: Routes = [
     path: 'expenses',
     loadChildren: () =>
       import('./expenses/expenses.module').then((m) => m.ExpensesModule),
-    canActivate: [AuthGuardService],
   },
 ];
 

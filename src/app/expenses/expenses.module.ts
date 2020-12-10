@@ -5,9 +5,10 @@ import { RouterModule } from '@angular/router';
 import { ExpensesContainerComponent } from './components/expenses-container/expenses-container.component';
 import { NewExpenseComponent } from './components/new-expense/new-expense.component';
 import { ExpensesTableComponent } from './components/expenses-table/expenses-table.component';
+import { LogExpensesComponent } from './components/log-expenses/log-expenses.component';
 
 @NgModule({
-  declarations: [ExpensesContainerComponent, NewExpenseComponent, ExpensesTableComponent],
+  declarations: [ExpensesContainerComponent, NewExpenseComponent, ExpensesTableComponent, LogExpensesComponent],
   imports: [CommonModule, ExpensesRoutingModule],
   exports: [ExpensesContainerComponent],
 })
