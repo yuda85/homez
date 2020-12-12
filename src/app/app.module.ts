@@ -14,6 +14,7 @@ import { LoginComponent } from './components/login/login.component';
 import { NgxsModule } from '@ngxs/store';
 import { AppState } from './state/app-state';
 import { HomeComponent } from './components/home/home.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 const firebaseUiAuthConfig: firebaseui.auth.Config = {
   signInFlow: 'popup',
@@ -36,6 +37,7 @@ const firebaseUiAuthConfig: firebaseui.auth.Config = {
   imports: [
     BrowserModule,
     FormsModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     MaterialModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),

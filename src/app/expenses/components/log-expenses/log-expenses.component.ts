@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { AuthService } from 'src/app/auth/auth.service';
 import { LoginService } from '../../../auth/login.service';
 import { DatabaseService } from '../../../core/database.service';
 import { Expense, expense_types } from '../../models';
@@ -10,7 +11,7 @@ import { Expense, expense_types } from '../../models';
   styleUrls: ['./log-expenses.component.scss'],
 })
 export class LogExpensesComponent implements OnInit, OnDestroy {
-  categories: string[] = this.loginService.getCurrentCategories();
+  categories: string[] = ['בניה', 'ריצוף', 'פיניש'];
   types: string[] = expense_types;
   expenseObj: Expense = {
     name: null,
@@ -26,7 +27,8 @@ export class LogExpensesComponent implements OnInit, OnDestroy {
   constructor(
     private loginService: LoginService,
     private snackBar: MatSnackBar,
-    private database: DatabaseService
+    private database: DatabaseService,
+    private auth: AuthService
   ) {
     database.categoriesAddedAnnounced$.subscribe((category) => {
       this.updateExpenseCategories(category);
@@ -42,23 +44,12 @@ export class LogExpensesComponent implements OnInit, OnDestroy {
   }
 
   saveExpenseEntry(expenseForm: any) {
+    debugger;
     this.isLoading = true;
     if (typeof this.expenseObj.date !== 'string') {
       this.expenseObj.date = this.expenseObj.date.toDateString();
     }
-    this.database
-      .saveNewExpense(this.expenseObj, this.loginService.getUserId())
-      .then((data) => {
-        this.isLoading = false;
-        expenseForm.resetForm();
-        this.resetExpenseObj();
-        this.showSnackBar();
-        this.announceChange();
-      })
-      .catch((e) => {
-        this.isLoading = false;
-        console.log('Failed');
-      });
+    this.database.saveNewExpense(this.expenseObj, this.auth.getUserId());
   }
 
   announceChange() {
@@ -86,7 +77,7 @@ export class LogExpensesComponent implements OnInit, OnDestroy {
     }
   }
 
-  checkDate(date: Date) {
+  checkDate(date: any) {
     this.dateError = this.expenseObj.date == null;
   }
 

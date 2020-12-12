@@ -2,6 +2,7 @@ import { Injectable, Provider } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { DatabaseService } from '../core/database.service';
 
 @Injectable({
   providedIn: 'root',
@@ -11,9 +12,15 @@ export class AuthService {
 
   private isLoggedInSubject$: Subject<boolean> = new Subject<boolean>();
 
-  constructor(public afAuth: AngularFireAuth, public router: Router) {
+  constructor(
+    public afAuth: AngularFireAuth,
+    public router: Router,
+    private db: DatabaseService
+  ) {
     this.afAuth.authState.subscribe((user) => {
       if (user) {
+        if (this.db.isUserExist(user.uid)) {
+        }
         this.user = user;
         localStorage.setItem('user', JSON.stringify(this.user));
         this.isLoggedInSubject$.next(true);
@@ -26,6 +33,11 @@ export class AuthService {
 
   public isLoggedIn(): Observable<boolean> {
     return this.isLoggedInSubject$.asObservable();
+  }
+
+  public getUserId(): string {
+    debugger;
+    return this.user.uid;
   }
 
   public async logout() {

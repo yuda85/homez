@@ -5,6 +5,7 @@ import * as firebase from 'firebase';
 
 import { DataSnapshot } from '@angular/fire/database/interfaces';
 import { Expense } from '../expenses/models/expenses.model';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +17,7 @@ export class DatabaseService {
   expenseAddedAnnounced$ = this.expenseAddedSource.asObservable();
   categoriesAddedAnnounced$ = this.categoriesAddedSource.asObservable();
 
-  constructor(public db: AngularFireDatabase) {}
+  constructor(public db: AngularFireDatabase, private _db: AngularFirestore) {}
 
   announceExpenseCreated(mission: string) {
     this.expenseAddedSource.next(mission);
@@ -27,7 +28,13 @@ export class DatabaseService {
   }
 
   saveNewExpense(expense: Expense, userId: string) {
-    return this.db.database.ref('users/' + userId + '/expenses').push(expense);
+    debugger;
+    this._db
+      .collection('users')
+      .doc(userId)
+      .collection('expenses')
+      .add(expense);
+    // this._db.collection(userId).add({ expense: expense });
   }
 
   getUserExpenses(userId: string): Observable<SnapshotAction<any>[]> {
@@ -64,5 +71,16 @@ export class DatabaseService {
 
   deleteExpense(userId: string, key: string): Promise<void> {
     return this.db.list('users/' + userId + '/expenses').remove(key);
+  }
+
+  addUser(userId: string): void {
+    this.db.database.ref('users').push(userId);
+  }
+
+  isUserExist(id: string): boolean {
+    debugger;
+    console.log(this.db.list('users'));
+
+    return false;
   }
 }
