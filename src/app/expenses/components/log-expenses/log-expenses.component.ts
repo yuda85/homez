@@ -35,20 +35,13 @@ export class LogExpensesComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnInit() {
-    setTimeout(() => {
-      this.database.getUserExpenses(this.auth.getUserId()).subscribe((data) => {
-        console.log(data);
-      });
-    }, 2000);
-  }
+  ngOnInit() {}
 
   updateExpenseCategories(category: string) {
     this.categories = this.loginService.getCurrentCategories();
   }
 
   saveExpenseEntry(expenseForm: any) {
-    debugger;
     this.isLoading = true;
     if (typeof this.expenseObj.date !== 'string') {
       this.expenseObj.date = this.expenseObj.date.toDateString();
