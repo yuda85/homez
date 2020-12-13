@@ -29,16 +29,15 @@ export class DatabaseService {
   }
 
   saveNewExpense(expense: Expense, userId: string) {
-    debugger;
-    this._db
+    return this._db
       .collection('users')
       .doc(userId)
       .collection('expenses')
       .add(expense);
-    // this._db.collection(userId).add({ expense: expense });
   }
 
   getUserExpenses(userId: string): Observable<any[]> {
+    debugger;
     // return this.db.list('users/' + userId + '/expenses').snapshotChanges();
     return this._db
       .collection('users')
@@ -92,7 +91,6 @@ export class DatabaseService {
   }
 
   isUserExist(id: string): boolean {
-    debugger;
     console.log(this.db.list('users'));
 
     return false;

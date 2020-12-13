@@ -3,13 +3,13 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ExpensesContainerComponent } from './components/expenses-container/expenses-container.component';
+import { ExpensesTableComponent } from './components/expenses-table/expenses-table.component';
 import { LogExpensesComponent } from './components/log-expenses/log-expenses.component';
-import { NewExpenseComponent } from './components/new-expense/new-expense.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: DashboardComponent,
+    component: ExpensesTableComponent,
   },
   {
     path: 'new',

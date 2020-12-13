@@ -17,6 +17,12 @@ export class AuthService {
     public router: Router,
     private db: DatabaseService
   ) {
+    if (!!localStorage.getItem('user')) {
+      this.user = JSON.parse(localStorage.getItem('user')).uid;
+    } else {
+      this.user = null;
+    }
+
     this.afAuth.authState.subscribe((user) => {
       if (user) {
         if (this.db.isUserExist(user.uid)) {
@@ -36,7 +42,6 @@ export class AuthService {
   }
 
   public getUserId(): string {
-    debugger;
     return this.user.uid;
   }
 
