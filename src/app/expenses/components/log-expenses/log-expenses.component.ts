@@ -36,7 +36,11 @@ export class LogExpensesComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    debugger;
+    setTimeout(() => {
+      this.database.getUserExpenses(this.auth.getUserId()).subscribe((data) => {
+        console.log(data);
+      });
+    }, 2000);
   }
 
   updateExpenseCategories(category: string) {

@@ -6,6 +6,7 @@ import * as firebase from 'firebase';
 import { DataSnapshot } from '@angular/fire/database/interfaces';
 import { Expense } from '../expenses/models/expenses.model';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -37,8 +38,21 @@ export class DatabaseService {
     // this._db.collection(userId).add({ expense: expense });
   }
 
-  getUserExpenses(userId: string): Observable<SnapshotAction<any>[]> {
-    return this.db.list('users/' + userId + '/expenses').snapshotChanges();
+  getUserExpenses(userId: string): Observable<any[]> {
+    // return this.db.list('users/' + userId + '/expenses').snapshotChanges();
+    return this._db
+      .collection('users')
+      .doc(userId)
+      .collection('expenses')
+      .snapshotChanges()
+      .pipe(
+        map((docArray) => {
+          return docArray.map((doc) => {
+            console.log(doc.payload.doc.data());
+            return doc.payload.doc.data();
+          });
+        })
+      );
   }
 
   saveNewCategories(categories: string[], userId: string): Promise<any> {
