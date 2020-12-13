@@ -8,6 +8,7 @@ import { ExpensesTableComponent } from './components/expenses-table/expenses-tab
 import { LogExpensesComponent } from './components/log-expenses/log-expenses.component';
 import { FormsModule } from '@angular/forms';
 import { MaterialModule } from '../material/material.module';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { MaterialModule } from '../material/material.module';
     NewExpenseComponent,
     ExpensesTableComponent,
     LogExpensesComponent,
+    DashboardComponent,
   ],
   imports: [CommonModule, ExpensesRoutingModule, FormsModule, MaterialModule],
   exports: [ExpensesContainerComponent],
