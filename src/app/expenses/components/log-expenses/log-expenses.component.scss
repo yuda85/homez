@@ -1,0 +1,21 @@
+.new-expense {
+  padding: 20px;
+  min-height: calc(100vh - 64px);
+
+  ::ng-deep {
+    mat-form-field {
+      text-align: right;
+      display: block;
+      &* {
+        transition: 0 !important;
+        animation: none !important;
+      }
+    }
+  }
+
+  &__actions {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+  }
+}

@@ -27,4 +27,10 @@
   .column-width {
     flex: 0 0 35%;
   }
+
+  &__actions {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+  }
 }
