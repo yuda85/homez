@@ -20,21 +20,26 @@ export class AuthService {
   constructor(
     public afAuth: AngularFireAuth,
     public router: Router,
-    private db: DatabaseService,
-    private store: Store
+    private store: Store // private db: DatabaseService
   ) {
     if (!!localStorage.getItem('user')) {
-      this.user = JSON.parse(localStorage.getItem('user')).uid;
+      this.user = JSON.parse(localStorage.getItem('user')).id;
     } else {
       this.user = null;
     }
 
     this.afAuth.authState.subscribe((user) => {
       if (user) {
-        this.store.dispatch(new SetUser(user));
-        if (this.db.isUserExist(user.uid)) {
-        }
-        this.user = user;
+        console.log(user);
+        this.user = {
+          displayName: user.displayName,
+          creationDate: user.metadata.creationTime,
+          expensesEntered: '',
+          lastLogin: user.metadata.lastSignInTime,
+          id: user.uid,
+          photoURL: user.photoURL,
+        };
+        this.store.dispatch(new SetUser(this.user));
         localStorage.setItem('user', JSON.stringify(this.user));
         this.isLoggedInSubject$.next(true);
       } else {
@@ -44,12 +49,20 @@ export class AuthService {
     });
   }
 
+  public updateUser(key: string, value: any) {
+    this.user = {
+      ...this.user,
+      [key]: value,
+    };
+    this.store.dispatch(new SetUser(this.user));
+  }
+
   public isLoggedIn(): Observable<boolean> {
     return this.isLoggedInSubject$.asObservable();
   }
 
   public getUserId(): string {
-    return this.user.uid;
+    return this.user.id;
   }
 
   public getUser(): Observable<IUser> {

@@ -4,12 +4,23 @@ import { AuthService } from 'src/app/auth/auth.service';
 import { DatabaseService } from '../../../core/database.service';
 import { Expense, expense_types } from '../../models';
 
+export interface UserDetails {
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  password?: string;
+  expensesEntered?: number;
+  lastLogin?: string;
+  creationDate?: string;
+}
 @Component({
   selector: 'app-log-expenses',
   templateUrl: './log-expenses.component.html',
   styleUrls: ['./log-expenses.component.scss'],
 })
 export class LogExpensesComponent implements OnInit, OnDestroy {
+  user: any;
+
   public categories: string[] = ['בניה', 'ריצוף', 'פיניש'];
   public types: string[] = expense_types;
   public expenseObj: Expense = {
@@ -29,7 +40,11 @@ export class LogExpensesComponent implements OnInit, OnDestroy {
     private auth: AuthService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.auth.getUser().subscribe((data) => {
+      this.user = data;
+    });
+  }
 
   ngOnDestroy(): void {}
 

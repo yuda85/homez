@@ -6,7 +6,7 @@ import * as uuid from 'uuid';
 import { DataSnapshot } from '@angular/fire/database/interfaces';
 import { Expense } from '../expenses/models/expenses.model';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { filter, finalize, map, take } from 'rxjs/operators';
+import { filter, finalize, map, take, tap } from 'rxjs/operators';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { AuthService } from '../auth/auth.service';
 
@@ -25,7 +25,8 @@ export class DatabaseService {
   constructor(
     public db: AngularFireDatabase,
     private _db: AngularFirestore,
-    private storage: AngularFireStorage
+    private storage: AngularFireStorage,
+    private auth: AuthService
   ) {}
 
   public announceExpenseCreated(mission: string): void {
@@ -55,6 +56,9 @@ export class DatabaseService {
           return docArray.map((doc) => {
             return { ...doc.payload.doc.data(), id: doc.payload.doc.id };
           });
+        }),
+        tap((data) => {
+          this.auth.updateUser('expensesEntered', data.length);
         })
       );
   }

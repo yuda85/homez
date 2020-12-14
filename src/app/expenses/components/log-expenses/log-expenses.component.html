@@ -1,6 +1,57 @@
 <div class="new-expense">
   <div class="container">
-    <div class="new-expense__user-info"></div>
+    <div class="new-expense__user-info">
+      <mat-card>
+        <mat-card-title>מידע משתמש</mat-card-title>
+        <mat-card-header>
+          <mat-card-subtitle></mat-card-subtitle>
+        </mat-card-header>
+        <ng-container>
+          <mat-card-content>
+            <div class="row">
+              <div class="col-sm-12 info-alignment justify-content-center">
+                <mat-icon *ngIf="!user.photoURL; else avatar" class="account"
+                  >account_circle</mat-icon
+                >
+                <ng-template #avatar>
+                  <img src="{{ user.photoURL }}" alt="{{ user.displayName }}" />
+                </ng-template>
+                <div class="justify-content-center">
+                  <span class="info-content">{{ user.displayName }}</span>
+                </div>
+                <div class="d-flex justify-content-around user-summary">
+                  <div class="user-summary__section">
+                    <label class="text-muted">בונה בית מאז</label>
+                    <div class="info-content">
+                      {{ user.creationDate | date: "mediumDate" }}
+                    </div>
+                  </div>
+
+                  <div class="divider"></div>
+
+                  <div class="user-summary__section">
+                    <label class="text-muted">כמה הוצאות נרשמו</label>
+                    <div class="info-content">
+                      {{ user.expensesEntered || 0 }}
+                    </div>
+                  </div>
+
+                  <div class="divider"></div>
+
+                  <div class="user-summary__section">
+                    <label class="text-muted">חיבור אחרון</label>
+                    <div class="info-content">
+                      {{ user.lastLogin | date: "mediumDate" }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </mat-card-content>
+          <mat-card-actions> </mat-card-actions>
+        </ng-container>
+      </mat-card>
+    </div>
 
     <div class="new-expense__categories"></div>
 
@@ -151,14 +202,6 @@
           <mat-card-actions>
             <div class="d-flex justify-content-end">
               <button
-                type="button"
-                mat-button
-                color="primary"
-                (click)="clearForm(f)"
-              >
-                איתחול הטופס
-              </button>
-              <button
                 type="submit"
                 mat-raised-button
                 color="primary"
@@ -166,6 +209,14 @@
               >
                 <mat-icon>save</mat-icon>
                 שמור
+              </button>
+              <button
+                type="button"
+                mat-button
+                color="primary"
+                (click)="clearForm(f)"
+              >
+                איתחול הטופס
               </button>
             </div>
           </mat-card-actions>
