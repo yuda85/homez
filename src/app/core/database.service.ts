@@ -45,7 +45,6 @@ export class DatabaseService {
       .pipe(
         map((docArray) => {
           return docArray.map((doc) => {
-            console.log(doc.payload.doc.data());
             return doc.payload.doc.data();
           });
         })
@@ -93,8 +92,6 @@ export class DatabaseService {
   }
 
   public isUserExist(id: string): boolean {
-    console.log(this.db.list('users'));
-
     return false;
   }
 }

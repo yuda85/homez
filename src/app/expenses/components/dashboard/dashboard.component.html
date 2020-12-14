@@ -1,3 +1,5 @@
 <div class="dashboard">
-  <app-expenses-table></app-expenses-table>
+  <div class="dashboard__table" *ngIf="!!(expensesData$ | async)">
+    <app-expenses-table [data]="expensesData$ | async"></app-expenses-table>
+  </div>
 </div>

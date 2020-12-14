@@ -1,4 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  Input,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -12,17 +18,24 @@ import { Expense } from '../../models';
   templateUrl: './expenses-table.component.html',
   styleUrls: ['./expenses-table.component.scss'],
 })
-export class ExpensesTableComponent implements OnInit {
-  constructor(
-    private database: DatabaseService,
-    private auth: AuthService,
-    private dialog: MatDialog
-  ) {}
+export class ExpensesTableComponent implements AfterViewInit {
+  private _data: Array<Expense>;
 
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  constructor() {}
+
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild('sorter', { static: true }) sort: MatSort;
 
-  public data: Expense[] = [];
+  @Input() set data(data: Array<Expense>) {
+    this._data = data;
+    if (!!data && data.length) {
+      this.expensesData = new MatTableDataSource<Expense>(data);
+      this.expensesData.paginator = this.paginator;
+      this.expensesData.sort = this.sort;
+    }
+  }
+
+  // public data: Expense[] = [];
   public expensesData = new MatTableDataSource<Expense>();
   public displayColumns: string[] = [
     'name',
@@ -33,37 +46,20 @@ export class ExpensesTableComponent implements OnInit {
     'comments',
   ];
 
-  ngOnInit(): void {
-    this.database.getUserExpenses(this.auth.getUserId()).subscribe((data) => {
-      this.data = data;
-      console.log('DATA', data);
-      this.expensesData = new MatTableDataSource<Expense>(this.data);
-      this.expensesData.paginator = this.paginator;
-      this.expensesData.sort = this.sort;
-    });
-  }
-
   ngAfterViewInit() {
     this.expensesData.sort = this.sort;
   }
 
-  ngOnChanges(changes: any) {
-    if (!changes.data.firstChange) {
-      this.expensesData = new MatTableDataSource<Expense>(this.data);
-      this.expensesData.paginator = this.paginator;
-      this.expensesData.sort = this.sort;
-    }
-  }
-
-  isDataEmpty(): boolean {
-    return this.data.length === 0;
-  }
-
-  editData(expense: Expense) {
+  public editData(expense: Expense) {
     // const dialogRef = this.dialog.open(ManageExpenseComponent, {
     //   data: expense as any,
     //   hasBackdrop: true,
     //   disableClose: true,
     // });
+  }
+
+  public doFilter(e: Event) {
+    const target = e.target as HTMLInputElement;
+    this.expensesData.filter = target.value.trim().toLowerCase();
   }
 }
