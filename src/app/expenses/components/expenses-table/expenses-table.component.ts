@@ -21,10 +21,12 @@ import { Expense } from '../../models';
 export class ExpensesTableComponent implements AfterViewInit {
   private _data: Array<Expense>;
 
+  public files: File[];
+
   constructor(private _db: DatabaseService, private auth: AuthService) {}
 
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
-  @ViewChild('sorter', { static: true }) sort: MatSort;
+  @ViewChild('sorter', { static: false }) sort: MatSort;
 
   @Input() set data(data: Array<Expense>) {
     this._data = data;
@@ -35,8 +37,6 @@ export class ExpensesTableComponent implements AfterViewInit {
       this.expensesData.sort = this.sort;
     }
   }
-
-  // public data: Expense[] = [];
   public expensesData = new MatTableDataSource<Expense>();
   public displayColumns: string[] = [
     'name',
@@ -60,17 +60,18 @@ export class ExpensesTableComponent implements AfterViewInit {
     // });
   }
 
-  public doFilter(e: Event) {
+  public doFilter(e: Event): void {
     const target = e.target as HTMLInputElement;
     this.expensesData.filter = target.value.trim().toLowerCase();
   }
 
-  public uploadFile(event, docId) {
+  public uploadFile(event: Event, docId: string): void {
     const userId = this.auth.getUserId();
+    console.log('DOC ID', docId);
     this._db.uploadFile(event, userId, docId);
   }
 
-  public deleteFile(fileId: string, docId: string) {
+  public deleteFile(fileId: string, docId: string): void {
     const userId = this.auth.getUserId();
     this._db.deleteFileFromStorage(userId, docId, fileId);
   }

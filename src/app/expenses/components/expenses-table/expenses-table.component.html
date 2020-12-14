@@ -87,7 +87,12 @@
         </ng-container>
 
         <ng-container matColumnDef="comments">
-          <th mat-header-cell *matHeaderCellDef [ngClass]="'column-width'">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+            [ngClass]="'column-width'"
+          >
             Comments
           </th>
           <td mat-cell *matCellDef="let element" [ngClass]="'column-width'">
@@ -96,16 +101,23 @@
         </ng-container>
 
         <ng-container matColumnDef="file">
-          <th mat-header-cell *matHeaderCellDef [ngClass]="'column-width'">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+            [ngClass]="'column-width'"
+          >
             העלאת קובץ
           </th>
-          <td mat-cell *matCellDef="let element" [ngClass]="'column-width'">
-            <ng-container *ngIf="element?.fileName">
-              <a
-                href="{{ element.fileUrl }}"
-                download="{{ element.fileName }}"
-                >{{ element.fileName }}</a
-              >
+          <td
+            mat-cell
+            *matCellDef="let element; let i = index"
+            [ngClass]="'column-width'"
+          >
+            <div *ngIf="element.file; else noFile">
+              <a download="{{ element.file }}" href="{{ element.fileUrl }}">{{
+                element.file
+              }}</a>
               <span
                 class="delete-file"
                 (click)="deleteFile(element.fileId, element.id)"
@@ -113,10 +125,10 @@
               >
                 ✕
               </span>
-            </ng-container>
-            <ng-container *ngIf="!element?.fileName">
+            </div>
+            <ng-template #noFile>
               <label
-                for="file"
+                for="file-{{ element.id }}"
                 matRipple
                 [matRippleUnbounded]="false"
                 class="mat-elevation-z2"
@@ -124,13 +136,13 @@
                 Upload File
                 <input
                   hidden
-                  id="file"
-                  name="file"
+                  id="file-{{ element.id }}"
+                  name="file-{{ element.id }}"
                   type="file"
                   (change)="uploadFile($event, element.id)"
                 />
               </label>
-            </ng-container>
+            </ng-template>
           </td>
         </ng-container>
 
@@ -142,7 +154,6 @@
         <tr
           mat-row
           *matRowDef="let row; columns: displayColumns"
-          (click)="editData(row)"
           [ngClass]="'column-width'"
         ></tr>
       </table>

@@ -8,4 +8,5 @@ export interface Expense {
   comments?: string;
   file?: string;
   fileUrl?: string;
+  fileId?: string;
 }

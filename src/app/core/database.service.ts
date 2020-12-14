@@ -154,11 +154,10 @@ export class DatabaseService {
       .doc(userId)
       .collection('expenses')
       .doc(docId)
-      .update({ fileName: file.name, fileId: fileId });
+      .update({ file: file.name, fileId: fileId });
   }
 
   deleteFileFromStorage(userId, docId, fileId) {
-    debugger;
     const filePath = `/${userId}/${fileId}`;
 
     const fileRef = this.storage.ref(filePath);
@@ -168,7 +167,7 @@ export class DatabaseService {
       .doc(userId)
       .collection('expenses')
       .doc(docId)
-      .update({ fileName: null, fileId: null });
+      .update({ file: null, fileId: null });
   }
 
   public isUserExist(id: string): boolean {
