@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from 'src/app/auth/auth.service';
-import { LoginService } from '../../../auth/login.service';
 import { DatabaseService } from '../../../core/database.service';
 import { Expense, expense_types } from '../../models';
 
@@ -25,21 +24,12 @@ export class LogExpensesComponent implements OnInit, OnDestroy {
   dateError = false;
 
   constructor(
-    private loginService: LoginService,
     private snackBar: MatSnackBar,
     private database: DatabaseService,
     private auth: AuthService
-  ) {
-    database.categoriesAddedAnnounced$.subscribe((category) => {
-      this.updateExpenseCategories(category);
-    });
-  }
+  ) {}
 
   ngOnInit() {}
-
-  updateExpenseCategories(category: string) {
-    this.categories = this.loginService.getCurrentCategories();
-  }
 
   saveExpenseEntry(expenseForm: any) {
     this.isLoading = true;
