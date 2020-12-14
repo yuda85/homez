@@ -10,9 +10,9 @@ import { Expense, expense_types } from '../../models';
   styleUrls: ['./log-expenses.component.scss'],
 })
 export class LogExpensesComponent implements OnInit, OnDestroy {
-  categories: string[] = ['בניה', 'ריצוף', 'פיניש'];
-  types: string[] = expense_types;
-  expenseObj: Expense = {
+  public categories: string[] = ['בניה', 'ריצוף', 'פיניש'];
+  public types: string[] = expense_types;
+  public expenseObj: Expense = {
     name: null,
     date: null,
     category: null,
@@ -20,8 +20,8 @@ export class LogExpensesComponent implements OnInit, OnDestroy {
     amount: null,
     comments: '',
   };
-  isLoading = false;
-  dateError = false;
+  public isLoading = false;
+  public dateError = false;
 
   constructor(
     private snackBar: MatSnackBar,
@@ -31,7 +31,9 @@ export class LogExpensesComponent implements OnInit, OnDestroy {
 
   ngOnInit() {}
 
-  saveExpenseEntry(expenseForm: any) {
+  ngOnDestroy(): void {}
+
+  public saveExpenseEntry(expenseForm: any) {
     this.isLoading = true;
     if (typeof this.expenseObj.date !== 'string') {
       this.expenseObj.date = this.expenseObj.date.toDateString();
@@ -39,11 +41,42 @@ export class LogExpensesComponent implements OnInit, OnDestroy {
     this.database.saveNewExpense(this.expenseObj, this.auth.getUserId());
   }
 
-  announceChange() {
+  public announceChange() {
     this.database.announceExpenseCreated('new expense');
   }
 
-  resetExpenseObj() {
+  private showSnackBar() {
+    this.snackBar.open('Expense saved!', '', { duration: 2000 });
+  }
+
+  public save(value: any, valid: any, form: any) {
+    if (valid) {
+      this.saveExpenseEntry(form);
+      this.clearForm(form);
+      this.showSnackBar();
+    }
+  }
+
+  public checkDate(date: any) {
+    this.dateError = this.expenseObj.date == null;
+  }
+
+  public clearForm(expenseForm: any) {
+    this.dateError = false;
+    expenseForm.resetForm();
+    this.resetExpenseObj();
+  }
+
+  public formatAmount() {
+    if (this.expenseObj.amount !== null) {
+      if (typeof this.expenseObj.amount !== 'string') {
+        const rounded = this.expenseObj.amount.toFixed(2);
+        this.expenseObj.amount = parseFloat(rounded);
+      }
+    }
+  }
+
+  private resetExpenseObj() {
     this.expenseObj = {
       name: null as any,
       date: null as any,
@@ -53,35 +86,4 @@ export class LogExpensesComponent implements OnInit, OnDestroy {
       comments: '',
     };
   }
-
-  showSnackBar() {
-    this.snackBar.open('Expense saved!', '', { duration: 2000 });
-  }
-
-  save(value: any, valid: any, form: any) {
-    if (valid) {
-      this.saveExpenseEntry(form);
-    }
-  }
-
-  checkDate(date: any) {
-    this.dateError = this.expenseObj.date == null;
-  }
-
-  clearForm(expenseForm: any) {
-    this.dateError = false;
-    expenseForm.resetForm();
-    this.resetExpenseObj();
-  }
-
-  formatAmount() {
-    if (this.expenseObj.amount !== null) {
-      if (typeof this.expenseObj.amount !== 'string') {
-        const rounded = this.expenseObj.amount.toFixed(2);
-        this.expenseObj.amount = parseFloat(rounded);
-      }
-    }
-  }
-
-  ngOnDestroy(): void {}
 }

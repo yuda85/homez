@@ -9,7 +9,7 @@ import { LogExpensesComponent } from './components/log-expenses/log-expenses.com
 const routes: Routes = [
   {
     path: '',
-    component: ExpensesTableComponent,
+    component: DashboardComponent,
   },
   {
     path: 'new',

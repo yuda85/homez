@@ -15,30 +15,28 @@ export class DatabaseService {
   private expenseAddedSource = new Subject<string>();
   private categoriesAddedSource = new Subject<string>();
 
-  expenseAddedAnnounced$ = this.expenseAddedSource.asObservable();
-  categoriesAddedAnnounced$ = this.categoriesAddedSource.asObservable();
+  public expenseAddedAnnounced$ = this.expenseAddedSource.asObservable();
+  public categoriesAddedAnnounced$ = this.categoriesAddedSource.asObservable();
 
   constructor(public db: AngularFireDatabase, private _db: AngularFirestore) {}
 
-  announceExpenseCreated(mission: string) {
+  public announceExpenseCreated(mission: string): void {
     this.expenseAddedSource.next(mission);
   }
 
-  announceCategoriesAdded(mission: string) {
+  public announceCategoriesAdded(mission: string): void {
     this.categoriesAddedSource.next(mission);
   }
 
-  saveNewExpense(expense: Expense, userId: string) {
-    return this._db
+  public saveNewExpense(expense: Expense, userId: string): void {
+    this._db
       .collection('users')
       .doc(userId)
       .collection('expenses')
       .add(expense);
   }
 
-  getUserExpenses(userId: string): Observable<any[]> {
-    debugger;
-    // return this.db.list('users/' + userId + '/expenses').snapshotChanges();
+  public getUserExpenses(userId: string): Observable<any[]> {
     return this._db
       .collection('users')
       .doc(userId)
@@ -54,13 +52,13 @@ export class DatabaseService {
       );
   }
 
-  saveNewCategories(categories: string[], userId: string): Promise<any> {
+  public saveNewCategories(categories: string[], userId: string): Promise<any> {
     return this.db.database
       .ref('users/' + userId + '/categories')
       .set(categories);
   }
 
-  getUserDetails(currentUser: any): Promise<DataSnapshot> {
+  public getUserDetails(currentUser: any): Promise<DataSnapshot> {
     return this.db.database
       .ref('users/')
       .orderByChild('email')
@@ -68,29 +66,33 @@ export class DatabaseService {
       .once('value');
   }
 
-  getCurrentCategories(userId: string): Promise<DataSnapshot> {
+  public getCurrentCategories(userId: string): Promise<DataSnapshot> {
     return this.db.database
       .ref('users/' + userId + '/categories')
       .once('value');
   }
 
-  getExpensesOnce(userId: string): Promise<DataSnapshot> {
+  public getExpensesOnce(userId: string): Promise<DataSnapshot> {
     return this.db.database.ref('users/' + userId + '/expenses').once('value');
   }
 
-  updateExpense(userId: string, key: string, expense: Expense): Promise<void> {
+  public updateExpense(
+    userId: string,
+    key: string,
+    expense: Expense
+  ): Promise<void> {
     return this.db.list('users/' + userId + '/expenses').update(key, expense);
   }
 
-  deleteExpense(userId: string, key: string): Promise<void> {
+  public deleteExpense(userId: string, key: string): Promise<void> {
     return this.db.list('users/' + userId + '/expenses').remove(key);
   }
 
-  addUser(userId: string): void {
+  public addUser(userId: string): void {
     this.db.database.ref('users').push(userId);
   }
 
-  isUserExist(id: string): boolean {
+  public isUserExist(id: string): boolean {
     console.log(this.db.list('users'));
 
     return false;

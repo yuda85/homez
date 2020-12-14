@@ -18,7 +18,21 @@ export class ExpensesTableComponent implements OnInit {
     private auth: AuthService,
     private dialog: MatDialog
   ) {}
-  expensesData = new MatTableDataSource<Expense>();
+
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild('sorter', { static: true }) sort: MatSort;
+
+  public data: Expense[] = [];
+  public expensesData = new MatTableDataSource<Expense>();
+  public displayColumns: string[] = [
+    'name',
+    'amount',
+    'date',
+    'category',
+    'type',
+    'comments',
+  ];
+
   ngOnInit(): void {
     this.database.getUserExpenses(this.auth.getUserId()).subscribe((data) => {
       this.data = data;
@@ -28,18 +42,6 @@ export class ExpensesTableComponent implements OnInit {
       this.expensesData.sort = this.sort;
     });
   }
-
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild('sorter', { static: true }) sort: MatSort;
-  public data: Expense[] = [];
-  public displayColumns: string[] = [
-    'name',
-    'amount',
-    'date',
-    'category',
-    'type',
-    'comments',
-  ];
 
   ngAfterViewInit() {
     this.expensesData.sort = this.sort;
