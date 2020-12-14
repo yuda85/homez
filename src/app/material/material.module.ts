@@ -46,6 +46,7 @@ const MaterialModules = [
   MatIconModule,
   MatProgressBarModule,
   MatTooltipModule,
+  MatRippleModule,
 ];
 
 @NgModule({
