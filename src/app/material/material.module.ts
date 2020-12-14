@@ -18,6 +18,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatRippleModule } from '@angular/material/core';
 
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 
@@ -43,6 +45,7 @@ const MaterialModules = [
   MatSnackBarModule,
   MatIconModule,
   MatProgressBarModule,
+  MatTooltipModule,
 ];
 
 @NgModule({

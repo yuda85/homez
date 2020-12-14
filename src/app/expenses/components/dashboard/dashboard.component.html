@@ -2,4 +2,15 @@
   <div class="dashboard__table" *ngIf="!!(expensesData$ | async)">
     <app-expenses-table [data]="expensesData$ | async"></app-expenses-table>
   </div>
+
+  <div class="dashboard__actions">
+    <a
+      [routerLink]="['/expenses/new']"
+      mat-fab
+      color="accent"
+      matTooltip="הוספת הוצאה"
+    >
+      <mat-icon>add</mat-icon>
+    </a>
+  </div>
 </div>

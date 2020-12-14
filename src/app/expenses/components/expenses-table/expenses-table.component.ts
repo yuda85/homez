@@ -21,7 +21,7 @@ import { Expense } from '../../models';
 export class ExpensesTableComponent implements AfterViewInit {
   private _data: Array<Expense>;
 
-  constructor() {}
+  constructor(private _db: DatabaseService, private auth: AuthService) {}
 
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild('sorter', { static: true }) sort: MatSort;
@@ -29,6 +29,7 @@ export class ExpensesTableComponent implements AfterViewInit {
   @Input() set data(data: Array<Expense>) {
     this._data = data;
     if (!!data && data.length) {
+      console.log(data);
       this.expensesData = new MatTableDataSource<Expense>(data);
       this.expensesData.paginator = this.paginator;
       this.expensesData.sort = this.sort;
@@ -44,6 +45,7 @@ export class ExpensesTableComponent implements AfterViewInit {
     'category',
     'type',
     'comments',
+    'file',
   ];
 
   ngAfterViewInit() {
@@ -61,5 +63,15 @@ export class ExpensesTableComponent implements AfterViewInit {
   public doFilter(e: Event) {
     const target = e.target as HTMLInputElement;
     this.expensesData.filter = target.value.trim().toLowerCase();
+  }
+
+  public uploadFile(event, docId) {
+    const userId = this.auth.getUserId();
+    this._db.uploadFile(event, userId, docId);
+  }
+
+  public deleteFile(fileId: string, docId: string) {
+    const userId = this.auth.getUserId();
+    this._db.deleteFileFromStorage(userId, docId, fileId);
   }
 }
