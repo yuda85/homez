@@ -20,7 +20,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatRippleModule } from '@angular/material/core';
-
+import { MatChipsModule } from '@angular/material/chips';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 const MaterialModules = [
@@ -47,6 +47,7 @@ const MaterialModules = [
   MatProgressBarModule,
   MatTooltipModule,
   MatRippleModule,
+  MatChipsModule,
 ];
 
 @NgModule({

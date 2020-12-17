@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Injectable, OnDestroy } from '@angular/core';
+import { Observable, Subject, Subscription } from 'rxjs';
 import { AngularFireDatabase, SnapshotAction } from '@angular/fire/database';
 import * as firebase from 'firebase';
 import * as uuid from 'uuid';
@@ -9,25 +9,42 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { filter, finalize, map, take, tap } from 'rxjs/operators';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { AuthService } from '../auth/auth.service';
+import { Category } from '../expenses/models';
 
 @Injectable({
   providedIn: 'root',
 })
-export class DatabaseService {
+export class DatabaseService implements OnDestroy {
   private expenseAddedSource = new Subject<string>();
   private categoriesAddedSource = new Subject<string>();
+  private userId: string;
+  private subscription: Subscription = new Subscription();
 
   public expenseAddedAnnounced$ = this.expenseAddedSource.asObservable();
   public categoriesAddedAnnounced$ = this.categoriesAddedSource.asObservable();
   uploadPercent: any;
   downloadURL: any;
+  private exitingCategories: Category[] = [];
 
   constructor(
     public db: AngularFireDatabase,
     private _db: AngularFirestore,
     private storage: AngularFireStorage,
     private auth: AuthService
-  ) {}
+  ) {
+    this.subscription.add(
+      this.auth
+        .getUser()
+        .pipe(filter((data) => !!data))
+        .subscribe((data) => {
+          this.userId = data.id;
+        })
+    );
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
 
   public announceExpenseCreated(mission: string): void {
     this.expenseAddedSource.next(mission);
@@ -78,10 +95,53 @@ export class DatabaseService {
       );
   }
 
-  public saveNewCategories(categories: string[], userId: string): Promise<any> {
-    return this.db.database
-      .ref('users/' + userId + '/categories')
-      .set(categories);
+  public setExpensesCategories(
+    userId: string,
+    listOfCategories: Array<Category>
+  ): void {
+    if (this.userId) {
+      const exitingCategories = this.exitingCategories.map(
+        (data) => data.value
+      );
+      listOfCategories.forEach((category) => {
+        this._db
+          .collection('users')
+          .doc(userId)
+          .collection('categories')
+          .add({ value: category.value, removable: category.removable });
+      });
+    }
+  }
+
+  public getExpensesCategories(userId: string): Observable<Array<Category>> {
+    return this._db
+      .collection('users')
+      .doc(userId)
+      .collection('categories')
+      .snapshotChanges()
+      .pipe(
+        filter((data) => !!data),
+        map((docArray) => {
+          return docArray.map((doc) => {
+            return {
+              ...(doc.payload.doc.data() as Category),
+              id: doc.payload.doc.id,
+            };
+          });
+        }),
+        tap((data) => {
+          this.exitingCategories = data;
+        })
+      );
+  }
+
+  public deleteExpenseCategory(userId: string, category: Category): void {
+    this._db
+      .collection('users')
+      .doc(userId)
+      .collection('categories')
+      .doc(category.id)
+      .delete();
   }
 
   public getUserDetails(currentUser: any): Promise<DataSnapshot> {
@@ -89,12 +149,6 @@ export class DatabaseService {
       .ref('users/')
       .orderByChild('email')
       .equalTo(currentUser)
-      .once('value');
-  }
-
-  public getCurrentCategories(userId: string): Promise<DataSnapshot> {
-    return this.db.database
-      .ref('users/' + userId + '/categories')
       .once('value');
   }
 
@@ -118,7 +172,7 @@ export class DatabaseService {
     this.db.database.ref('users').push(userId);
   }
 
-  uploadFile(event, userId, docId) {
+  public uploadFile(event, userId, docId) {
     const file = event.target.files[0];
     const fileId = uuid.v4();
     const filePath = `/${userId}/${fileId}`;

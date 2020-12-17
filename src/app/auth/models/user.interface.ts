@@ -1,5 +1,8 @@
 export interface IUser {
   displayName: string;
-  email: string;
-  uid: string;
+  creationDate: string | Date;
+  expensesEntered: number;
+  lastLogin: string | Date;
+  id: string;
+  photoURL: string;
 }

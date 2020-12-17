@@ -53,7 +53,58 @@
       </mat-card>
     </div>
 
-    <div class="new-expense__categories"></div>
+    <div class="new-expense__categories">
+      <mat-card>
+        <mat-card-title>Expense Categories</mat-card-title>
+        <ng-container>
+          <mat-card-header>
+            <mat-card-subtitle
+              >Add/Remove Expense Categories Below
+            </mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <mat-form-field class="example-chip-list">
+              <mat-chip-list #chipList aria-label="Fruit selection">
+                <mat-chip
+                  *ngFor="let category of categories; let i = index"
+                  [selectable]="false"
+                  [removable]="category.removable"
+                  (removed)="removeCategory(category.value, i)"
+                >
+                  {{ category.value }}
+                  <mat-icon matChipRemove *ngIf="category.removable"
+                    >cancel</mat-icon
+                  >
+                </mat-chip>
+                <input
+                  placeholder="Add category..."
+                  [matChipInputFor]="chipList"
+                  [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                  [matChipInputAddOnBlur]="false"
+                  (matChipInputTokenEnd)="onCategoryEntered($event)"
+                />
+              </mat-chip-list>
+            </mat-form-field>
+          </mat-card-content>
+          <mat-card-actions>
+            <div class="d-flex justify-content-end">
+              <!-- <button mat-button color="primary" (click)="resetCategories()">
+                Reset
+              </button>
+              <!-- <button
+                mat-raised-button
+                color="primary"
+                (click)="saveCategories()"
+              >
+                <mat-icon>save</mat-icon>
+                <span>Save</span>
+
+              </button> -->
+            </div>
+          </mat-card-actions>
+        </ng-container>
+      </mat-card>
+    </div>
 
     <div class="new-expense__form">
       <form #f="ngForm" novalidate (ngSubmit)="save(f.value, f.valid, f)">
@@ -149,7 +200,7 @@
                       *ngFor="let category of categories"
                       [value]="category"
                     >
-                      {{ category }}
+                      {{ category.value }}
                     </mat-option>
                   </mat-select>
                 </mat-form-field>

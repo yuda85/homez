@@ -20,7 +20,7 @@ export class AuthService {
   constructor(
     public afAuth: AngularFireAuth,
     public router: Router,
-    private store: Store // private db: DatabaseService
+    private store: Store
   ) {
     if (!!localStorage.getItem('user')) {
       this.user = JSON.parse(localStorage.getItem('user')).id;

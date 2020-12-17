@@ -1,8 +1,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatChipInputEvent } from '@angular/material/chips/chip-input';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from 'src/app/auth/auth.service';
 import { DatabaseService } from '../../../core/database.service';
-import { Expense, expense_types } from '../../models';
+import { Category, Expense, expense_types } from '../../models';
+import { cloneDeep, find, includes, isEqual, transform, pick } from 'lodash';
+import { ENTER } from '@angular/cdk/keycodes';
+import { Subscriber, Subscription } from 'rxjs';
+import { IUser } from 'src/app/auth/models';
+import { filter } from 'rxjs/operators';
 
 export interface UserDetails {
   firstName?: string;
@@ -19,9 +25,38 @@ export interface UserDetails {
   styleUrls: ['./log-expenses.component.scss'],
 })
 export class LogExpensesComponent implements OnInit, OnDestroy {
-  user: any;
+  private subscription: Subscription = new Subscription();
+  private userId: string = this.auth.getUserId();
 
-  public categories: string[] = ['בניה', 'ריצוף', 'פיניש'];
+  public user: IUser;
+
+  readonly separatorKeysCodes: number[] = [ENTER];
+  public categories: Array<Category> = [
+    {
+      value: 'תכנון',
+      removable: false,
+      id: null,
+    },
+    {
+      value: 'בניה',
+      removable: false,
+      id: null,
+    },
+    {
+      value: 'פיניש',
+      removable: false,
+      id: null,
+    },
+  ];
+
+  public originalCategories: {
+    value: string;
+    removable: boolean;
+  }[] = cloneDeep(this.categories);
+
+  get categoriesUpdated(): boolean {
+    return !isEqual(this.categories, this.originalCategories);
+  }
   public types: string[] = expense_types;
   public expenseObj: Expense = {
     name: null,
@@ -33,6 +68,8 @@ export class LogExpensesComponent implements OnInit, OnDestroy {
   };
   public isLoading = false;
   public dateError = false;
+  public isLoadingUserInformation: boolean = false;
+  isLoadingCategories: boolean = false;
 
   constructor(
     private snackBar: MatSnackBar,
@@ -41,9 +78,33 @@ export class LogExpensesComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.auth.getUser().subscribe((data) => {
-      this.user = data;
-    });
+    this.isLoadingUserInformation = true;
+    this.subscription.add(
+      this.auth.getUser().subscribe((data) => {
+        this.isLoadingUserInformation = false;
+        this.user = data;
+      })
+    );
+
+    this.subscription.add(
+      this.database
+        .getExpensesCategories(this.userId)
+        .pipe(filter((data) => !!data))
+        .subscribe((data) => {
+          this.isLoadingCategories = false;
+
+          if (!data.length) {
+            debugger;
+            this.setBaseCategories();
+          } else {
+            this.categories = data;
+          }
+        })
+    );
+  }
+
+  private setBaseCategories(): void {
+    this.database.setExpensesCategories(this.userId, this.categories);
   }
 
   ngOnDestroy(): void {}
@@ -53,7 +114,7 @@ export class LogExpensesComponent implements OnInit, OnDestroy {
     if (typeof this.expenseObj.date !== 'string') {
       this.expenseObj.date = this.expenseObj.date.toDateString();
     }
-    this.database.saveNewExpense(this.expenseObj, this.auth.getUserId());
+    this.database.saveNewExpense(this.expenseObj, this.userId);
   }
 
   public announceChange() {
@@ -82,6 +143,10 @@ export class LogExpensesComponent implements OnInit, OnDestroy {
     this.resetExpenseObj();
   }
 
+  resetCategories() {
+    this.categories = cloneDeep(this.originalCategories);
+  }
+
   public formatAmount() {
     if (this.expenseObj.amount !== null) {
       if (typeof this.expenseObj.amount !== 'string') {
@@ -100,5 +165,36 @@ export class LogExpensesComponent implements OnInit, OnDestroy {
       amount: null as any,
       comments: '',
     };
+  }
+
+  public onCategoryEntered(data: MatChipInputEvent) {
+    const valueTrimmed = data.value.trim();
+    const newCategory = { value: data.value, removable: true, id: null };
+    const matchingCategory = find(
+      this.categories,
+      (c) =>
+        c.value === valueTrimmed ||
+        c.value.toLowerCase() === valueTrimmed.toLowerCase()
+    );
+    if (!matchingCategory) {
+      this.categories.push({ value: data.value, removable: true, id: null });
+      data.input.value = null;
+      debugger;
+      this.database.setExpensesCategories(this.userId, [newCategory]);
+    }
+  }
+
+  removeCategory(data: string, index: number) {
+    this.database.deleteExpenseCategory(this.userId, this.categories[index]);
+    // this.categories.splice(index, 1);
+  }
+
+  saveCategories() {
+    this.isLoadingCategories = true;
+    const currentUser = this.auth.getUserId();
+  }
+
+  penSnackBar(message) {
+    this.snackBar.open(message, '', { duration: 2000 });
   }
 }
