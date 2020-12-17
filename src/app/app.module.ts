@@ -16,6 +16,7 @@ import { AppState } from './state/app-state';
 import { HomeComponent } from './components/home/home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularFireStorageModule, BUCKET } from '@angular/fire/storage';
+import { SharedModule } from './shared/shared.module';
 
 const firebaseUiAuthConfig: firebaseui.auth.Config = {
   signInFlow: 'popup',
@@ -47,6 +48,7 @@ const firebaseUiAuthConfig: firebaseui.auth.Config = {
     FlexLayoutModule,
     NgxsModule.forRoot(AppState),
     FormsModule,
+    SharedModule,
   ],
   providers: [{ provide: BUCKET, useValue: 'gs://homez-162d4.appspot.com/' }],
   bootstrap: [AppComponent],

@@ -9,6 +9,7 @@ import { LogExpensesComponent } from './components/log-expenses/log-expenses.com
 import { FormsModule } from '@angular/forms';
 import { MaterialModule } from '../material/material.module';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,13 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     LogExpensesComponent,
     DashboardComponent,
   ],
-  imports: [CommonModule, ExpensesRoutingModule, FormsModule, MaterialModule],
+  imports: [
+    CommonModule,
+    ExpensesRoutingModule,
+    FormsModule,
+    MaterialModule,
+    SharedModule,
+  ],
   exports: [ExpensesContainerComponent],
 })
 export class ExpensesModule {}
