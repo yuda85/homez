@@ -181,20 +181,15 @@ export class LogExpensesComponent implements OnInit, OnDestroy {
       data.input.value = null;
       debugger;
       this.database.setExpensesCategories(this.userId, [newCategory]);
+      this.penSnackBar('קטגוריה נשמרה');
     }
   }
 
-  removeCategory(data: string, index: number) {
+  public removeCategory(data: string, index: number) {
     this.database.deleteExpenseCategory(this.userId, this.categories[index]);
-    // this.categories.splice(index, 1);
   }
 
-  saveCategories() {
-    this.isLoadingCategories = true;
-    const currentUser = this.auth.getUserId();
-  }
-
-  penSnackBar(message) {
+  private penSnackBar(message) {
     this.snackBar.open(message, '', { duration: 2000 });
   }
 }
