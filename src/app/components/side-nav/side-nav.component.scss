@@ -1,0 +1,29 @@
+.sidenav {
+  width: 300px;
+  height: calc(100% - 64px);
+  position: fixed;
+  top: 64px;
+  right: -300px;
+  overflow: hidden;
+  white-space: nowrap;
+  background: #bdbdbd;
+  z-index: 3;
+  transition: 0.2s all ease;
+
+  &.active {
+    right: 0;
+  }
+
+  &__list {
+    width: 300px;
+  }
+
+  .router-link-active {
+    color: #fff;
+    background: rgba(0, 0, 0, 0.24);
+  }
+
+  ::ng-deep.mat-pseudo-checkbox {
+    display: none !important;
+  }
+}

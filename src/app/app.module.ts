@@ -17,6 +17,7 @@ import { HomeComponent } from './components/home/home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularFireStorageModule, BUCKET } from '@angular/fire/storage';
 import { SharedModule } from './shared/shared.module';
+import { SideNavComponent } from './components/side-nav/side-nav.component';
 
 const firebaseUiAuthConfig: firebaseui.auth.Config = {
   signInFlow: 'popup',
@@ -35,7 +36,7 @@ const firebaseUiAuthConfig: firebaseui.auth.Config = {
   credentialHelper: firebaseui.auth.CredentialHelper.GOOGLE_YOLO,
 };
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, LoginComponent, HomeComponent],
+  declarations: [AppComponent, HeaderComponent, LoginComponent, HomeComponent, SideNavComponent],
   imports: [
     BrowserModule,
     FormsModule,

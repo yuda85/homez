@@ -22,6 +22,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatRippleModule } from '@angular/material/core';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 const MaterialModules = [
   MatButtonModule,
@@ -48,6 +50,8 @@ const MaterialModules = [
   MatTooltipModule,
   MatRippleModule,
   MatChipsModule,
+  DragDropModule,
+  MatExpansionModule,
 ];
 
 @NgModule({

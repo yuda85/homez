@@ -6,7 +6,6 @@ import { ExpensesContainerComponent } from './components/expenses-container/expe
 
 import { ExpensesTableComponent } from './components/expenses-table/expenses-table.component';
 import { LogExpensesComponent } from './components/log-expenses/log-expenses.component';
-import { FormsModule } from '@angular/forms';
 import { MaterialModule } from '../material/material.module';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { SharedModule } from '../shared/shared.module';
@@ -18,13 +17,7 @@ import { SharedModule } from '../shared/shared.module';
     LogExpensesComponent,
     DashboardComponent,
   ],
-  imports: [
-    CommonModule,
-    ExpensesRoutingModule,
-    FormsModule,
-    MaterialModule,
-    SharedModule,
-  ],
+  imports: [CommonModule, ExpensesRoutingModule, MaterialModule, SharedModule],
   exports: [ExpensesContainerComponent],
 })
 export class ExpensesModule {}

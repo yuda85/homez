@@ -1,4 +1,5 @@
-<app-header></app-header>
+<app-header (toggleSidenav)="handleToggleSideNav($event)"></app-header>
+<app-side-nav [isOpen]="isSidenavOpen"></app-side-nav>
 <div class="app">
   <router-outlet></router-outlet>
 </div>

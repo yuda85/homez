@@ -8,6 +8,7 @@ import { AuthService } from './auth/auth.service';
 })
 export class AppComponent {
   title = 'homez';
+  public isSidenavOpen: boolean = false;
 
   constructor(private auth: AuthService) {}
 
@@ -17,5 +18,9 @@ export class AppComponent {
 
   isLoggedIn() {
     return this.auth.isLoggedIn();
+  }
+
+  public handleToggleSideNav(event: boolean): void {
+    this.isSidenavOpen = event;
   }
 }
