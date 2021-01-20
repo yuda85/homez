@@ -1,0 +1,35 @@
+<div class="dashboard">
+  <div class="container">
+    <div class="dashboard__chart">
+      <div class="row">
+        <div class="col-lg-6 col-md-12 col-sm-12">
+          <app-chart [data]="this.pieChartData$ | async"></app-chart>
+        </div>
+        <div class="col-lg-6 col-md-12 col-sm-12">
+          <app-line-chart [data]="lineChartData$ | async"></app-line-chart>
+        </div>
+      </div>
+    </div>
+
+    <div class="dashboard__table" *ngIf="!!(expensesData$ | async)">
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+          <app-expenses-table
+            [data]="expensesData$ | async"
+          ></app-expenses-table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="dashboard__actions">
+    <a
+      [routerLink]="['/expenses/new']"
+      mat-fab
+      color="accent"
+      matTooltip="הוספת הוצאה"
+    >
+      <mat-icon>add</mat-icon>
+    </a>
+  </div>
+</div>

@@ -1,0 +1,13 @@
+.dashboard {
+  min-height: calc(100vh - 64px);
+  padding: 20px;
+  position: relative;
+  &__table {
+  }
+
+  &__actions {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+  }
+}

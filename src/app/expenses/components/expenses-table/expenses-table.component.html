@@ -1,0 +1,166 @@
+<div class="expenses-table">
+  <mat-card>
+    <mat-card-title>טבלת ההוצאות</mat-card-title>
+    <mat-card-header>
+      <mat-card-subtitle>כלל ההצאות שנרשמו</mat-card-subtitle>
+    </mat-card-header>
+    <div class="table-container">
+      <div fxLayoutAlign="center center">
+        <mat-form-field fxFlex="40%" style="text-align: right">
+          <input
+            matInput
+            type="text"
+            (keyup)="doFilter($event)"
+            placeholder="חפש הוצאות"
+          />
+        </mat-form-field>
+      </div>
+      <table mat-table [dataSource]="expensesData" matSort #sorter="matSort">
+        <ng-container matColumnDef="name">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+            [ngClass]="'column-width'"
+          >
+            Name
+          </th>
+          <td mat-cell *matCellDef="let element" [ngClass]="'column-width'">
+            {{ element.name }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="amount">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+            [ngClass]="'column-width'"
+          >
+            Amount
+          </th>
+          <td mat-cell *matCellDef="let element" [ngClass]="'column-width'">
+            {{ element.amount }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="date">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+            [ngClass]="'column-width'"
+          >
+            Date
+          </th>
+          <td mat-cell *matCellDef="let element" [ngClass]="'column-width'">
+            {{ element.date }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="category">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+            [ngClass]="'column-width'"
+          >
+            Category
+          </th>
+          <td mat-cell *matCellDef="let element" [ngClass]="'column-width'">
+            {{ element.category.value }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="type">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+            [ngClass]="'column-width'"
+          >
+            Type
+          </th>
+          <td mat-cell *matCellDef="let element" [ngClass]="'column-width'">
+            {{ element.type }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="comments">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+            [ngClass]="'column-width'"
+          >
+            Comments
+          </th>
+          <td mat-cell *matCellDef="let element" [ngClass]="'column-width'">
+            {{ element.comments }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="file">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+            [ngClass]="'column-width'"
+          >
+            העלאת קובץ
+          </th>
+          <td
+            mat-cell
+            *matCellDef="let element; let i = index"
+            [ngClass]="'column-width'"
+          >
+            <div *ngIf="element.file; else noFile">
+              <a download="{{ element.file }}" href="{{ element.fileUrl }}">{{
+                element.file
+              }}</a>
+              <span
+                class="delete-file"
+                (click)="deleteFile(element.fileId, element.id)"
+                matTooltip="מחק הוצאה"
+              >
+                ✕
+              </span>
+            </div>
+            <ng-template #noFile>
+              <label
+                for="file-{{ element.id }}"
+                matRipple
+                [matRippleUnbounded]="false"
+                class="mat-elevation-z2"
+              >
+                Upload File
+                <input
+                  hidden
+                  id="file-{{ element.id }}"
+                  name="file-{{ element.id }}"
+                  type="file"
+                  (change)="uploadFile($event, element.id)"
+                />
+              </label>
+            </ng-template>
+          </td>
+        </ng-container>
+
+        <tr
+          mat-header-row
+          *matHeaderRowDef="displayColumns; sticky: true"
+          [ngClass]="'column-width'"
+        ></tr>
+        <tr
+          mat-row
+          *matRowDef="let row; columns: displayColumns"
+          [ngClass]="'column-width'"
+        ></tr>
+      </table>
+    </div>
+    <mat-paginator
+      [pageSizeOptions]="[5, 10, 20, 50]"
+      showFirstLastButtons
+    ></mat-paginator>
+  </mat-card>
+</div>

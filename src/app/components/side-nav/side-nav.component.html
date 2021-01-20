@@ -1,0 +1,39 @@
+<div class="sidenav" [ngClass]="{ active: isOpen }">
+  <div class="sidenav__list">
+    <mat-list>
+      <mat-selection-list>
+        <mat-list-option
+          [routerLink]="['/']"
+          [routerLinkActiveOptions]="{ exact: true }"
+          routerLinkActive="router-link-active"
+        >
+          דף הבית
+        </mat-list-option>
+        <mat-list-option
+          [routerLink]="['/expenses']"
+          routerLinkActive="router-link-active"
+        >
+          ניהול הוצאות
+        </mat-list-option>
+        <mat-list-option
+          [routerLink]="['/planning']"
+          routerLinkActive="router-link-active"
+        >
+          תכנון
+        </mat-list-option>
+        <mat-list-option
+          [routerLink]="['/building']"
+          routerLinkActive="router-link-active"
+        >
+          בניה
+        </mat-list-option>
+        <mat-list-option
+          [routerLink]="['/finish']"
+          routerLinkActive="router-link-active"
+        >
+          פיניש
+        </mat-list-option>
+      </mat-selection-list>
+    </mat-list>
+  </div>
+</div>

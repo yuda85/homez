@@ -1,0 +1,36 @@
+.table-container {
+  max-height: 500px;
+  overflow: auto;
+
+  table {
+    width: 100%;
+
+    td.mat-cell,
+    td.mat-footer-cell,
+    th.mat-header-cell {
+      padding: 15px;
+    }
+  }
+
+  label {
+    padding: 8px 10px;
+    border: 1px solid #bebebe;
+    border-radius: 4px;
+    display: block;
+    width: 107px;
+    overflow: hidden;
+  }
+
+  .delete-file {
+    cursor: pointer;
+  }
+  .column-width {
+    flex: 0 0 35%;
+  }
+
+  &__actions {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+  }
+}

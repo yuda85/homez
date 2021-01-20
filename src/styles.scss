@@ -1,2 +1,5 @@
-/* You can add global styles to this file, and also import other style files */
-@import "~firebaseui/dist/firebaseui.css";
+@import "./app/styles/normlize";
+@import "./app/styles/reset";
+@import "./app/styles/theme";
+@import "./app/styles/variables";
+@import "./app/styles/bootstrap-grid.min";

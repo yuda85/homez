@@ -7,6 +7,17 @@ import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import { HeaderComponent } from './components/header/header.component';
+import { MaterialModule } from './material/material.module';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { LoginComponent } from './components/login/login.component';
+import { NgxsModule } from '@ngxs/store';
+import { AppState } from './state/app-state';
+import { HomeComponent } from './components/home/home.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AngularFireStorageModule, BUCKET } from '@angular/fire/storage';
+import { SharedModule } from './shared/shared.module';
+import { SideNavComponent } from './components/side-nav/side-nav.component';
 
 const firebaseUiAuthConfig: firebaseui.auth.Config = {
   signInFlow: 'popup',
@@ -19,30 +30,28 @@ const firebaseUiAuthConfig: firebaseui.auth.Config = {
       },
       provider: firebase.auth.FacebookAuthProvider.PROVIDER_ID,
     },
-    firebase.auth.TwitterAuthProvider.PROVIDER_ID,
-    firebase.auth.GithubAuthProvider.PROVIDER_ID,
-    {
-      requireDisplayName: false,
-      provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
-    },
-    firebase.auth.PhoneAuthProvider.PROVIDER_ID,
-    firebaseui.auth.AnonymousAuthProvider.PROVIDER_ID,
   ],
   tosUrl: '<your-tos-link>',
   privacyPolicyUrl: '<your-privacyPolicyUrl-link>',
   credentialHelper: firebaseui.auth.CredentialHelper.GOOGLE_YOLO,
 };
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, HeaderComponent, LoginComponent, HomeComponent, SideNavComponent],
   imports: [
     BrowserModule,
     FormsModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
+    MaterialModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
     FirebaseUIModule.forRoot(firebaseUiAuthConfig),
+    FlexLayoutModule,
+    NgxsModule.forRoot(AppState),
+    FormsModule,
+    SharedModule,
   ],
-  providers: [],
+  providers: [{ provide: BUCKET, useValue: 'gs://homez-162d4.appspot.com/' }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

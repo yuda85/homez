@@ -1,7 +1,15 @@
-<firebase-ui></firebase-ui>
+<app-header (toggleSidenav)="handleToggleSideNav($event)"></app-header>
+<app-side-nav [isOpen]="isSidenavOpen"></app-side-nav>
+<div class="app">
+  <router-outlet></router-outlet>
+</div>
 
-<h1>
+<!-- <a [routerLink]="['/expenses']">name></a> -->
+
+<!-- <h1>
   <a href="https://www.npmjs.com/package/firebaseui-angular"
     >Link to npm angular fire base auth</a
   >
-</h1>
+
+  <button *ngIf="isLoggedIn() | async" (click)="logout()">Logout</button>
+</h1> -->
