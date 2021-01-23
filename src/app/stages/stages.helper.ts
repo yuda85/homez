@@ -5,6 +5,7 @@ export const planningStage: IStage = {
   stageItems: [
     {
       title: 'אדריכלות',
+      description: "צ'ק ליסט למשימות נדרשות בשלב האדריכלות",
       todos: [
         {
           title: 'תכנון אדריכלי',
@@ -22,6 +23,7 @@ export const planningStage: IStage = {
     },
     {
       title: 'תיאום תיכנון',
+      description: "צ'ק ליסט למשימות נדרשות בשלב התיאומים",
       todos: [
         {
           title: 'תיאום תיכנון פתחים',
