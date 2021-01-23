@@ -1,7 +1,9 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
+import { LoginComponent } from '../login/login.component';
 
 @Component({
   selector: 'app-header',
@@ -11,9 +13,17 @@ import { AuthService } from 'src/app/auth/auth.service';
 export class HeaderComponent implements OnInit {
   public isLoggedIn$: Observable<boolean> = this.auth.isLoggedIn();
   @Output() toggleSidenav: EventEmitter<boolean> = new EventEmitter();
+
+  @Input() set sidenavOpen(isSidnavOpen: boolean) {
+    this.isSidenavOpen = isSidnavOpen;
+  }
   public isSidenavOpen: boolean = false;
 
-  constructor(private auth: AuthService, private router: Router) {}
+  constructor(
+    private auth: AuthService,
+    private router: Router,
+    public dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {}
 
@@ -22,7 +32,15 @@ export class HeaderComponent implements OnInit {
   }
 
   public onLoginClick(): void {
-    this.router.navigate(['/login']);
+    this.openDialog();
+  }
+
+  openDialog() {
+    const dialogRef = this.dialog.open(LoginComponent);
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 
   public onHamburgerClick(): void {

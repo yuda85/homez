@@ -9,6 +9,7 @@ import { ENTER } from '@angular/cdk/keycodes';
 import { Subscriber, Subscription } from 'rxjs';
 import { IUser } from 'src/app/auth/models';
 import { filter } from 'rxjs/operators';
+import { ExpensesService } from '../../expeses.service';
 
 export interface UserDetails {
   firstName?: string;
@@ -73,8 +74,8 @@ export class LogExpensesComponent implements OnInit, OnDestroy {
 
   constructor(
     private snackBar: MatSnackBar,
-    private database: DatabaseService,
-    private auth: AuthService
+    private auth: AuthService,
+    private expensesService: ExpensesService
   ) {}
 
   ngOnInit() {
@@ -87,7 +88,7 @@ export class LogExpensesComponent implements OnInit, OnDestroy {
     );
 
     this.subscription.add(
-      this.database
+      this.expensesService
         .getExpensesCategories(this.userId)
         .pipe(filter((data) => !!data))
         .subscribe((data) => {
@@ -104,7 +105,7 @@ export class LogExpensesComponent implements OnInit, OnDestroy {
   }
 
   private setBaseCategories(): void {
-    this.database.setExpensesCategories(this.userId, this.categories);
+    this.expensesService.setExpensesCategories(this.userId, this.categories);
   }
 
   ngOnDestroy(): void {}
@@ -114,11 +115,7 @@ export class LogExpensesComponent implements OnInit, OnDestroy {
     if (typeof this.expenseObj.date !== 'string') {
       this.expenseObj.date = this.expenseObj.date.toDateString();
     }
-    this.database.saveNewExpense(this.expenseObj, this.userId);
-  }
-
-  public announceChange() {
-    this.database.announceExpenseCreated('new expense');
+    this.expensesService.saveNewExpense(this.expenseObj, this.userId);
   }
 
   private showSnackBar() {
@@ -180,13 +177,16 @@ export class LogExpensesComponent implements OnInit, OnDestroy {
       this.categories.push({ value: data.value, removable: true, id: null });
       data.input.value = null;
       debugger;
-      this.database.setExpensesCategories(this.userId, [newCategory]);
+      this.expensesService.setExpensesCategories(this.userId, [newCategory]);
       this.penSnackBar('קטגוריה נשמרה');
     }
   }
 
   public removeCategory(data: string, index: number) {
-    this.database.deleteExpenseCategory(this.userId, this.categories[index]);
+    this.expensesService.deleteExpenseCategory(
+      this.userId,
+      this.categories[index]
+    );
   }
 
   private penSnackBar(message) {

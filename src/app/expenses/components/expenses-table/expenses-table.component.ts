@@ -11,6 +11,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { AuthService } from '../../../auth/auth.service';
 import { DatabaseService } from '../../../core/database.service';
+import { ExpensesService } from '../../expeses.service';
 import { Expense } from '../../models';
 
 @Component({
@@ -23,7 +24,10 @@ export class ExpensesTableComponent implements AfterViewInit {
 
   public files: File[];
 
-  constructor(private _db: DatabaseService, private auth: AuthService) {}
+  constructor(
+    private auth: AuthService,
+    private expesesService: ExpensesService
+  ) {}
 
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild('sorter', { static: false }) sort: MatSort;
@@ -68,11 +72,11 @@ export class ExpensesTableComponent implements AfterViewInit {
   public uploadFile(event: Event, docId: string): void {
     const userId = this.auth.getUserId();
     console.log('DOC ID', docId);
-    this._db.uploadFile(event, userId, docId);
+    this.expesesService.uploadFile(event, userId, docId);
   }
 
   public deleteFile(fileId: string, docId: string): void {
     const userId = this.auth.getUserId();
-    this._db.deleteFileFromStorage(userId, docId, fileId);
+    this.expesesService.deleteFileFromStorage(userId, docId, fileId);
   }
 }

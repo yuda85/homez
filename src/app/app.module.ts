@@ -18,6 +18,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularFireStorageModule, BUCKET } from '@angular/fire/storage';
 import { SharedModule } from './shared/shared.module';
 import { SideNavComponent } from './components/side-nav/side-nav.component';
+import { ExpensesModule } from './expenses/expenses.module';
+import { StagesContainerComponent } from './stages/stages-container/stages-container.component';
+import { StagesModule } from './stages/stages.module';
+import { CommonModule } from '@angular/common';
 
 const firebaseUiAuthConfig: firebaseui.auth.Config = {
   signInFlow: 'popup',
@@ -36,8 +40,16 @@ const firebaseUiAuthConfig: firebaseui.auth.Config = {
   credentialHelper: firebaseui.auth.CredentialHelper.GOOGLE_YOLO,
 };
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, LoginComponent, HomeComponent, SideNavComponent],
+  declarations: [
+    AppComponent,
+    HeaderComponent,
+    LoginComponent,
+    HomeComponent,
+    SideNavComponent,
+    // StagesContainerComponent,
+  ],
   imports: [
+    CommonModule,
     BrowserModule,
     FormsModule,
     BrowserAnimationsModule,
@@ -50,6 +62,8 @@ const firebaseUiAuthConfig: firebaseui.auth.Config = {
     NgxsModule.forRoot(AppState),
     FormsModule,
     SharedModule,
+    ExpensesModule,
+    StagesModule,
   ],
   providers: [{ provide: BUCKET, useValue: 'gs://homez-162d4.appspot.com/' }],
   bootstrap: [AppComponent],

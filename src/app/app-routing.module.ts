@@ -4,7 +4,7 @@ import { AuthGuardService } from './auth/auth-guard.service';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { ExpensesContainerComponent } from './expenses/components/expenses-container/expenses-container.component';
-import { PlanningContainerComponent } from './planing/components/planning-container/planning-container.component';
+import { StagesContainerComponent } from './stages/stages-container/stages-container.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -17,9 +17,15 @@ const routes: Routes = [
   },
   {
     path: 'planning',
-    loadChildren: () =>
-      import('./planing/planing.module').then((m) => m.PlaningModule),
-    component: PlanningContainerComponent,
+    component: StagesContainerComponent,
+  },
+  {
+    path: 'building',
+    component: StagesContainerComponent,
+  },
+  {
+    path: 'finish',
+    component: StagesContainerComponent,
   },
 ];
 

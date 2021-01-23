@@ -4,6 +4,7 @@ import { FirebaseUISignInSuccessWithAuthResult } from 'firebaseui-angular';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
 import { filter } from 'rxjs/operators';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,11 @@ import { filter } from 'rxjs/operators';
 export class LoginComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
 
-  constructor(private router: Router, private auth: AuthService) {}
+  constructor(
+    private router: Router,
+    private auth: AuthService,
+    public dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     this.subscription = new Subscription();
@@ -34,6 +39,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   public successCallback(event: FirebaseUISignInSuccessWithAuthResult) {
-    console.log(event);
+    this.dialog.closeAll();
+    this.auth.successLogin();
   }
 }

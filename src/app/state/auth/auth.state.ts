@@ -1,7 +1,10 @@
+import { Injectable } from '@angular/core';
 import { State, StateContext, Action } from '@ngxs/store';
 import { SetIsLoggedIn, SetUser } from './auth.actions';
 import { AuthStateModel } from './auth.model';
-
+@Injectable({
+  providedIn: 'root',
+})
 @State<AuthStateModel>({
   name: 'auth',
   defaults: {

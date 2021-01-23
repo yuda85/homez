@@ -3,6 +3,7 @@
     <mat-list>
       <mat-selection-list>
         <mat-list-option
+          (click)="onNavItemClick()"
           [routerLink]="['/']"
           [routerLinkActiveOptions]="{ exact: true }"
           routerLinkActive="router-link-active"
@@ -10,24 +11,28 @@
           דף הבית
         </mat-list-option>
         <mat-list-option
+          (click)="onNavItemClick()"
           [routerLink]="['/expenses']"
           routerLinkActive="router-link-active"
         >
           ניהול הוצאות
         </mat-list-option>
         <mat-list-option
+          (click)="onNavItemClick()"
           [routerLink]="['/planning']"
           routerLinkActive="router-link-active"
         >
           תכנון
         </mat-list-option>
         <mat-list-option
+          (click)="onNavItemClick()"
           [routerLink]="['/building']"
           routerLinkActive="router-link-active"
         >
           בניה
         </mat-list-option>
         <mat-list-option
+          (click)="onNavItemClick()"
           [routerLink]="['/finish']"
           routerLinkActive="router-link-active"
         >

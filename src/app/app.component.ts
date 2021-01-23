@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { AuthService } from './auth/auth.service';
 
 @Component({
@@ -8,19 +10,27 @@ import { AuthService } from './auth/auth.service';
 })
 export class AppComponent {
   title = 'homez';
+
   public isSidenavOpen: boolean = false;
+  public isLoggedIn$: Observable<boolean> = this.auth
+    .isLoggedIn()
+    .pipe(tap(console.log));
 
   constructor(private auth: AuthService) {}
 
-  logout() {
+  public logout(): void {
     this.auth.logout();
   }
 
-  isLoggedIn() {
+  public isLoggedIn(): Observable<boolean> {
     return this.auth.isLoggedIn();
   }
 
   public handleToggleSideNav(event: boolean): void {
     this.isSidenavOpen = event;
+  }
+
+  public onSideNavItemClick(): void {
+    this.isSidenavOpen = false;
   }
 }
