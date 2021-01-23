@@ -24,7 +24,7 @@ const routes: Routes = [
     component: StagesContainerComponent,
   },
   {
-    path: 'finnish',
+    path: 'finish',
     component: StagesContainerComponent,
   },
 ];

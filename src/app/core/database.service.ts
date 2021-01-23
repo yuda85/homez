@@ -17,7 +17,7 @@ import { Category, ExpensesInfo } from '../expenses/models';
 export class DatabaseService implements OnDestroy {
   private expenseAddedSource = new Subject<string>();
   private categoriesAddedSource = new Subject<string>();
-  private userId: string;
+  public userId: string;
   private subscription: Subscription = new Subscription();
 
   public expenseAddedAnnounced$ = this.expenseAddedSource.asObservable();

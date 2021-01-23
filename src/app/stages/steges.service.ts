@@ -9,7 +9,9 @@ import { planningStage } from './stages.helper';
   providedIn: 'root',
 })
 export class StagesService {
-  constructor(private dataBaseService: DatabaseService) {}
+  constructor(private dataBaseService: DatabaseService) {
+    console.log(dataBaseService.userId);
+  }
 
   private planningSubject$: BehaviorSubject<IStage> = new BehaviorSubject(
     planningStage
