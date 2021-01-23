@@ -19,6 +19,8 @@ import { AngularFireStorageModule, BUCKET } from '@angular/fire/storage';
 import { SharedModule } from './shared/shared.module';
 import { SideNavComponent } from './components/side-nav/side-nav.component';
 import { ExpensesModule } from './expenses/expenses.module';
+import { StagesContainerComponent } from './stages/stages-container/stages-container.component';
+import { StagesModule } from './stages/stages.module';
 
 const firebaseUiAuthConfig: firebaseui.auth.Config = {
   signInFlow: 'popup',
@@ -43,6 +45,7 @@ const firebaseUiAuthConfig: firebaseui.auth.Config = {
     LoginComponent,
     HomeComponent,
     SideNavComponent,
+    // StagesContainerComponent,
   ],
   imports: [
     BrowserModule,
@@ -58,6 +61,7 @@ const firebaseUiAuthConfig: firebaseui.auth.Config = {
     FormsModule,
     SharedModule,
     ExpensesModule,
+    StagesModule,
   ],
   providers: [{ provide: BUCKET, useValue: 'gs://homez-162d4.appspot.com/' }],
   bootstrap: [AppComponent],

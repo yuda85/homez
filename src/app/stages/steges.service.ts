@@ -1,13 +1,21 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { DatabaseService } from '../core/database.service';
 import { StageType } from './models';
-import { StageItemTodo } from './models/stage-item.interface';
+import { IStage, StageItemTodo } from './models/stage-item.interface';
+import { planningStage } from './stages.helper';
 
 @Injectable({
   providedIn: 'root',
 })
-export class StegesService {
-  constructor() {}
+export class StagesService {
+  constructor(private dataBaseService: DatabaseService) {}
 
-  // public getStageItems(stageType: StageType): Observable<StageItemTodo> {}
+  private planningSubject$: BehaviorSubject<IStage> = new BehaviorSubject(
+    planningStage
+  );
+
+  public getStage(stageType: StageType): Observable<IStage> {
+    return this.planningSubject$.asObservable();
+  }
 }

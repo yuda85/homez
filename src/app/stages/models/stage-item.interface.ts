@@ -5,5 +5,10 @@ export interface StageItem {
 
 export interface StageItemTodo {
   title: string;
-  isCompleted: string;
+  isCompleted: boolean;
+}
+
+export interface IStage {
+  title: string;
+  stageItems: Array<StageItem>;
 }
