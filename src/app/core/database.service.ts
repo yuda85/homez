@@ -211,7 +211,11 @@ export class DatabaseService implements OnDestroy {
       .update({ file: file.name, fileId: fileId });
   }
 
-  deleteFileFromStorage(userId, docId, fileId) {
+  public deleteFileFromStorage(
+    userId: string,
+    docId: string,
+    fileId: string
+  ): void {
     const filePath = `/${userId}/${fileId}`;
 
     const fileRef = this.storage.ref(filePath);

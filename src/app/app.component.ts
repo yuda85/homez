@@ -23,4 +23,8 @@ export class AppComponent {
   public handleToggleSideNav(event: boolean): void {
     this.isSidenavOpen = event;
   }
+
+  public onSideNavItemClick(): void {
+    this.isSidenavOpen = false;
+  }
 }

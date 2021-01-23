@@ -18,6 +18,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularFireStorageModule, BUCKET } from '@angular/fire/storage';
 import { SharedModule } from './shared/shared.module';
 import { SideNavComponent } from './components/side-nav/side-nav.component';
+import { ExpensesModule } from './expenses/expenses.module';
 
 const firebaseUiAuthConfig: firebaseui.auth.Config = {
   signInFlow: 'popup',
@@ -36,7 +37,13 @@ const firebaseUiAuthConfig: firebaseui.auth.Config = {
   credentialHelper: firebaseui.auth.CredentialHelper.GOOGLE_YOLO,
 };
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, LoginComponent, HomeComponent, SideNavComponent],
+  declarations: [
+    AppComponent,
+    HeaderComponent,
+    LoginComponent,
+    HomeComponent,
+    SideNavComponent,
+  ],
   imports: [
     BrowserModule,
     FormsModule,
@@ -50,6 +57,7 @@ const firebaseUiAuthConfig: firebaseui.auth.Config = {
     NgxsModule.forRoot(AppState),
     FormsModule,
     SharedModule,
+    ExpensesModule,
   ],
   providers: [{ provide: BUCKET, useValue: 'gs://homez-162d4.appspot.com/' }],
   bootstrap: [AppComponent],

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-side-nav',
@@ -7,6 +7,8 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class SideNavComponent implements OnInit {
   private _isOpen: boolean = false;
+
+  @Output() onItemClick: EventEmitter<void> = new EventEmitter();
 
   @Input() set isOpen(isOpen: boolean) {
     this._isOpen = isOpen;
@@ -18,4 +20,8 @@ export class SideNavComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
+
+  public onNavItemClick(): void {
+    this.onItemClick.emit();
+  }
 }

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
@@ -11,6 +11,10 @@ import { AuthService } from 'src/app/auth/auth.service';
 export class HeaderComponent implements OnInit {
   public isLoggedIn$: Observable<boolean> = this.auth.isLoggedIn();
   @Output() toggleSidenav: EventEmitter<boolean> = new EventEmitter();
+
+  @Input() set sidenavOpen(isSidnavOpen: boolean) {
+    this.isSidenavOpen = isSidnavOpen;
+  }
   public isSidenavOpen: boolean = false;
 
   constructor(private auth: AuthService, private router: Router) {}
