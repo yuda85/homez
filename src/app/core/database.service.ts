@@ -9,7 +9,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { filter, finalize, map, take, tap } from 'rxjs/operators';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { AuthService } from '../auth/auth.service';
-import { Category } from '../expenses/models';
+import { Category, ExpensesInfo } from '../expenses/models';
 
 @Injectable({
   providedIn: 'root',

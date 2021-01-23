@@ -4,28 +4,28 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { AuthService } from 'src/app/auth/auth.service';
-import { DatabaseService } from 'src/app/core/database.service';
+import { ExpensesService as ExpensesService } from '../../expeses.service';
 import { Expense } from '../../models';
 
 @Component({
   selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss'],
+  templateUrl: './expenses-dashboard.component.html',
+  styleUrls: ['./expenses-dashboard.component.scss'],
 })
-export class DashboardComponent implements OnInit {
+export class ExpensesDashboardComponent implements OnInit {
   public expensesData$: Observable<Array<Expense>>;
   public pieChartData$: Observable<Array<{ [key: string]: object }>>;
   public lineChartData$: Observable<Array<{ [key: string]: object }>>;
 
   constructor(
-    private database: DatabaseService,
     private auth: AuthService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private expensesService: ExpensesService
   ) {}
 
   ngOnInit(): void {
     const userId = this.auth.getUserId();
-    this.expensesData$ = this.database
+    this.expensesData$ = this.expensesService
       .getUserExpenses(userId)
       .pipe(filter((data) => !!data));
 
