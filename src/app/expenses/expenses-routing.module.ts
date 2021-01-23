@@ -1,7 +1,7 @@
 //leaves-routing.module.ts
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { ExpensesDashboardComponent } from './components/expenses-dashboard/expenses-dashboard.component';
 import { ExpensesContainerComponent } from './components/expenses-container/expenses-container.component';
 import { ExpensesTableComponent } from './components/expenses-table/expenses-table.component';
 import { LogExpensesComponent } from './components/log-expenses/log-expenses.component';
@@ -9,7 +9,7 @@ import { LogExpensesComponent } from './components/log-expenses/log-expenses.com
 const routes: Routes = [
   {
     path: '',
-    component: DashboardComponent,
+    component: ExpensesDashboardComponent,
   },
   {
     path: 'new',

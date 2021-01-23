@@ -1,1 +1,10 @@
-<p>stages-container works!</p>
+<div class="stages">
+  <div class="container">
+    <mat-tab-group *ngIf="currentStage">
+      <mat-tab label="שלבים">
+        <app-stage [currentStage]="currentStage"></app-stage>
+      </mat-tab>
+      <mat-tab label="קבצים"> Content 2 </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>

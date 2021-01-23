@@ -9,7 +9,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { filter, finalize, map, take, tap } from 'rxjs/operators';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { AuthService } from '../auth/auth.service';
-import { Category } from '../expenses/models';
+import { Category, ExpensesInfo } from '../expenses/models';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +17,7 @@ import { Category } from '../expenses/models';
 export class DatabaseService implements OnDestroy {
   private expenseAddedSource = new Subject<string>();
   private categoriesAddedSource = new Subject<string>();
-  private userId: string;
+  public userId: string;
   private subscription: Subscription = new Subscription();
 
   public expenseAddedAnnounced$ = this.expenseAddedSource.asObservable();

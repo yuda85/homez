@@ -1,11 +1,23 @@
-<app-header
-  (toggleSidenav)="handleToggleSideNav($event)"
-  [sidenavOpen]="isSidenavOpen"
-></app-header>
-<app-side-nav
-  [isOpen]="isSidenavOpen"
-  (onItemClick)="onSideNavItemClick()"
-></app-side-nav>
-<div class="app">
-  <router-outlet></router-outlet>
+<div class="app-container">
+  <app-header
+    (toggleSidenav)="handleToggleSideNav($event)"
+    [sidenavOpen]="isSidenavOpen"
+  ></app-header>
+
+  <app-side-nav
+    [isOpen]="isSidenavOpen"
+    (onItemClick)="onSideNavItemClick()"
+  ></app-side-nav>
+
+  <div class="app" *ngIf="isLoggedIn$ | async; else visitor">
+    <!-- If isLoggedIn$ | async show router outlet else show somethng else -->
+
+    <router-outlet></router-outlet>
+  </div>
+
+  <ng-template #visitor>
+    <div class="app">
+      <h1>Visitor</h1>
+    </div>
+  </ng-template>
 </div>

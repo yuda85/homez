@@ -1,5 +1,5 @@
 export enum StageType {
-  Planning = 'Planning',
-  Building = 'Building',
-  Finish = 'Finish',
+  Planning = 'planning',
+  Building = 'building',
+  Finish = 'finish',
 }

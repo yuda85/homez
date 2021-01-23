@@ -7,7 +7,7 @@ import { ExpensesContainerComponent } from './components/expenses-container/expe
 import { ExpensesTableComponent } from './components/expenses-table/expenses-table.component';
 import { LogExpensesComponent } from './components/log-expenses/log-expenses.component';
 import { MaterialModule } from '../material/material.module';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { ExpensesDashboardComponent } from './components/expenses-dashboard/expenses-dashboard.component';
 import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
@@ -15,7 +15,7 @@ import { SharedModule } from '../shared/shared.module';
     ExpensesContainerComponent,
     ExpensesTableComponent,
     LogExpensesComponent,
-    DashboardComponent,
+    ExpensesDashboardComponent,
   ],
   imports: [CommonModule, ExpensesRoutingModule, MaterialModule, SharedModule],
   exports: [ExpensesContainerComponent],
