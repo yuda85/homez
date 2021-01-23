@@ -2,6 +2,8 @@ export interface StageItem {
   title: string;
   description: string;
   todos: Array<StageItemTodo>;
+  isTodoFormActive?: boolean;
+  stageProgress?: number;
 }
 
 export interface StageItemTodo {

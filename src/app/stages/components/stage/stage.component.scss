@@ -1,0 +1,16 @@
+.stages {
+  &__stage-item {
+    display: flex;
+    justify-content: space-between;
+  }
+  &__stage-item-progress {
+    position: relative;
+    margin-left: 80px;
+  }
+  &__stage-item-progress-precentage {
+    position: absolute;
+    top: 38px;
+    right: 50%;
+    transform: translateX(50%);
+  }
+}

@@ -2,30 +2,7 @@
   <div class="container">
     <mat-tab-group *ngIf="currentStage">
       <mat-tab label="שלבים">
-        <h2>{{ currentStage.title }}</h2>
-        <mat-accordion multi>
-          <mat-expansion-panel *ngFor="let item of currentStage.stageItems">
-            <mat-expansion-panel-header>
-              <mat-panel-title> {{ item.title }} </mat-panel-title>
-              <mat-panel-description>
-                {{ item.description }}
-              </mat-panel-description>
-            </mat-expansion-panel-header>
-            <div class="stages__check-list">
-              <div
-                class="stages__check-list-item"
-                *ngFor="let todoItem of item.todos"
-              >
-                <mat-checkbox
-                  class="example-margin"
-                  [(ngModel)]="todoItem.isCompleted"
-                >
-                  &nbsp; {{ todoItem.title }}</mat-checkbox
-                >
-              </div>
-            </div>
-          </mat-expansion-panel>
-        </mat-accordion>
+        <app-stage [currentStage]="currentStage"></app-stage>
       </mat-tab>
       <mat-tab label="קבצים"> Content 2 </mat-tab>
     </mat-tab-group>

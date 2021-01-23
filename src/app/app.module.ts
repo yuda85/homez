@@ -21,6 +21,7 @@ import { SideNavComponent } from './components/side-nav/side-nav.component';
 import { ExpensesModule } from './expenses/expenses.module';
 import { StagesContainerComponent } from './stages/stages-container/stages-container.component';
 import { StagesModule } from './stages/stages.module';
+import { CommonModule } from '@angular/common';
 
 const firebaseUiAuthConfig: firebaseui.auth.Config = {
   signInFlow: 'popup',
@@ -48,6 +49,7 @@ const firebaseUiAuthConfig: firebaseui.auth.Config = {
     // StagesContainerComponent,
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     FormsModule,
     BrowserAnimationsModule,
