@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { State, StateContext, Action } from '@ngxs/store';
-import { DatabaseService } from 'src/app/core/database.service';
-import { StageType } from 'src/app/stages/models';
-import { IStage } from 'src/app/stages/models/stage-item.interface';
-import { BaseStages } from 'src/app/stages/stages.helper';
+import { DatabaseService } from '../../core/database.service';
+import { StageType } from '../../stages/models';
+import { IStage } from '../../stages/models/stage-item.interface';
+import { BaseStages } from '../../stages/stages.helper';
 import { SetStages } from './stages.actions';
 import { StagesStateModel } from './stages.model';
 @Injectable({
@@ -42,7 +42,6 @@ export class StagesState {
   setStages(ctx: StateContext<StagesStateModel>) {
     //check if user has stages
     this._db.getUserStages().subscribe((data) => {
-      debugger;
       if (data.length) {
         data.forEach((stageItem) => {
           ctx.patchState({

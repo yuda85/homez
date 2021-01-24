@@ -1,13 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatChipInputEvent } from '@angular/material/chips/chip-input';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { AuthService } from 'src/app/auth/auth.service';
-import { DatabaseService } from '../../../core/database.service';
+import { AuthService } from '../../../auth/auth.service';
 import { Category, Expense, expense_types } from '../../models';
-import { cloneDeep, find, includes, isEqual, transform, pick } from 'lodash';
+import { cloneDeep, find, isEqual } from 'lodash';
 import { ENTER } from '@angular/cdk/keycodes';
 import { Subscriber, Subscription } from 'rxjs';
-import { IUser } from 'src/app/auth/models';
+import { IUser } from '../../../auth/models';
 import { filter } from 'rxjs/operators';
 import { ExpensesService } from '../../expeses.service';
 
@@ -95,7 +94,6 @@ export class LogExpensesComponent implements OnInit, OnDestroy {
           this.isLoadingCategories = false;
 
           if (!data.length) {
-            debugger;
             this.setBaseCategories();
           } else {
             this.categories = data;
@@ -176,7 +174,6 @@ export class LogExpensesComponent implements OnInit, OnDestroy {
     if (!matchingCategory) {
       this.categories.push({ value: data.value, removable: true, id: '' });
       data.input.value = '';
-      debugger;
       this.expensesService.setExpensesCategories(this.userId, [newCategory]);
       this.penSnackBar('קטגוריה נשמרה');
     }

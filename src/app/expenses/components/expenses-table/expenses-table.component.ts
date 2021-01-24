@@ -35,7 +35,6 @@ export class ExpensesTableComponent implements AfterViewInit {
   @Input() set data(data: Array<Expense>) {
     this._data = data;
     if (!!data && data.length) {
-      console.log(data);
       this.expensesData = new MatTableDataSource<Expense>(data);
       this.expensesData.paginator = this.paginator;
       this.expensesData.sort = this.sort;
@@ -71,7 +70,6 @@ export class ExpensesTableComponent implements AfterViewInit {
 
   public uploadFile(event: Event, docId: string): void {
     const userId = this.auth.getUserId();
-    console.log('DOC ID', docId);
     this.expesesService.uploadFile(event, userId, docId);
   }
 

@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { AuthService } from 'src/app/auth/auth.service';
+import { AuthService } from '../../auth/auth.service';
 import { LoginComponent } from '../login/login.component';
 
 @Component({
@@ -38,9 +38,7 @@ export class HeaderComponent implements OnInit {
   openDialog() {
     const dialogRef = this.dialog.open(LoginComponent);
 
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log(`Dialog result: ${result}`);
-    });
+    dialogRef.afterClosed().subscribe((result) => {});
   }
 
   public onHamburgerClick(): void {

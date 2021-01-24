@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FirebaseUISignInSuccessWithAuthResult } from 'firebaseui-angular';
 import { Subscription } from 'rxjs';
-import { AuthService } from 'src/app/auth/auth.service';
+import { AuthService } from '../../auth/auth.service';
 import { filter } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 

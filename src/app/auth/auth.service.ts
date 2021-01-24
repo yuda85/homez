@@ -30,7 +30,6 @@ export class AuthService {
 
     this.afAuth.authState.subscribe((user) => {
       if (user) {
-        console.log('user', user);
         this.user = {
           displayName: user.displayName,
           creationDate: user.metadata.creationTime,

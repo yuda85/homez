@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AuthService } from 'src/app/auth/auth.service';
-import { IUser } from 'src/app/auth/models';
+import { AuthService } from '../../../auth/auth.service';
+import { IUser } from '../../../auth/models';
 
 @Component({
   selector: 'app-expenses-container',

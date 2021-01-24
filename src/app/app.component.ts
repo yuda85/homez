@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
 import { AuthService } from './auth/auth.service';
 
 @Component({
@@ -12,9 +11,7 @@ export class AppComponent {
   title = 'homez';
 
   public isSidenavOpen: boolean = false;
-  public isLoggedIn$: Observable<boolean> = this.auth
-    .isLoggedIn()
-    .pipe(tap(console.log));
+  public isLoggedIn$: Observable<boolean> = this.auth.isLoggedIn();
 
   constructor(private auth: AuthService) {}
 

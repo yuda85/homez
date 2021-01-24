@@ -192,7 +192,6 @@ export class DatabaseService implements OnDestroy {
             .getDownloadURL()
 
             .subscribe((fileUrl) => {
-              console.log('boom Shakalak');
               this._db
                 .collection('users')
                 .doc(userId)
@@ -241,13 +240,9 @@ export class DatabaseService implements OnDestroy {
       .snapshotChanges()
       .pipe(
         map((docArray) => {
-          debugger;
           return docArray.map((doc) => {
             return { ...doc.payload.doc.data(), id: doc.payload.doc.id };
           });
-        }),
-        tap((data) => {
-          console.log(data);
         })
       );
   }

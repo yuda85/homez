@@ -1,4 +1,4 @@
-import { IUser } from 'src/app/auth/models';
+import { IUser } from '../../auth/models';
 
 export class SetUser {
   static readonly type = '[Auth] Set User';

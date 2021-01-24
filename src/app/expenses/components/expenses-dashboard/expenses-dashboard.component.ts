@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
-import { AuthService } from 'src/app/auth/auth.service';
+import { AuthService } from '../../../auth/auth.service';
 import { ExpensesService as ExpensesService } from '../../expeses.service';
 import { Expense } from '../../models';
 
@@ -82,8 +82,6 @@ export class ExpensesDashboardComponent implements OnInit {
               .reduce((a, b) => a + b, 0),
           };
         });
-
-        console.log(finalLineData);
 
         return finalLineData.sort((a, b) => {
           // Turn your strings into dates, and then subtract them

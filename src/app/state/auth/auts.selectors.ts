@@ -1,5 +1,5 @@
 import { Selector } from '@ngxs/store';
-import { IUser } from 'src/app/auth/models';
+import { IUser } from '../../auth/models';
 import { AuthStateModel } from './auth.model';
 import { AuthState } from './auth.state';
 

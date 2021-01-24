@@ -25,7 +25,6 @@ export class PieChartComponent {
   @Input() set data(data) {
     if (data && data.length) {
       this._data = data;
-      console.log('LALAL', data);
       this.updateChartData(data);
     }
   }
