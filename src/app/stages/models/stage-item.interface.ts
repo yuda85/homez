@@ -1,3 +1,5 @@
+import { StageType } from './stages.enum';
+
 export interface StageItem {
   title: string;
   description: string;
@@ -14,5 +16,7 @@ export interface StageItemTodo {
 
 export interface IStage {
   title: string;
+  type: StageType;
   stageItems: Array<StageItem>;
+  id?: string;
 }

@@ -10,6 +10,7 @@ import { filter, finalize, map, take, tap } from 'rxjs/operators';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { AuthService } from '../auth/auth.service';
 import { Category, ExpensesInfo } from '../expenses/models';
+import { IStage } from '../stages/models/stage-item.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +18,7 @@ import { Category, ExpensesInfo } from '../expenses/models';
 export class DatabaseService implements OnDestroy {
   private expenseAddedSource = new Subject<string>();
   private categoriesAddedSource = new Subject<string>();
-  public userId: string;
+  public userId: string = '';
   private subscription: Subscription = new Subscription();
 
   public expenseAddedAnnounced$ = this.expenseAddedSource.asObservable();
@@ -144,35 +145,35 @@ export class DatabaseService implements OnDestroy {
       .delete();
   }
 
-  public getUserDetails(currentUser: any): Promise<DataSnapshot> {
-    return this.db.database
-      .ref('users/')
-      .orderByChild('email')
-      .equalTo(currentUser)
-      .once('value');
-  }
+  // public getUserDetails(currentUser: any): Promise<DataSnapshot> {
+  //   return this.db.database
+  //     .ref('users/')
+  //     .orderByChild('email')
+  //     .equalTo(currentUser)
+  //     .once('value');
+  // }
 
-  public getExpensesOnce(userId: string): Promise<DataSnapshot> {
-    return this.db.database.ref('users/' + userId + '/expenses').once('value');
-  }
+  // public getExpensesOnce(userId: string): Promise<DataSnapshot> {
+  //   return this.db.database.ref('users/' + userId + '/expenses').once('value');
+  // }
 
-  public updateExpense(
-    userId: string,
-    key: string,
-    expense: Expense
-  ): Promise<void> {
-    return this.db.list('users/' + userId + '/expenses').update(key, expense);
-  }
+  // public updateExpense(
+  //   userId: string,
+  //   key: string,
+  //   expense: Expense
+  // ): Promise<void> {
+  //   return this.db.list('users/' + userId + '/expenses').update(key, expense);
+  // }
 
-  public deleteExpense(userId: string, key: string): Promise<void> {
-    return this.db.list('users/' + userId + '/expenses').remove(key);
-  }
+  // public deleteExpense(userId: string, key: string): Promise<void> {
+  //   return this.db.list('users/' + userId + '/expenses').remove(key);
+  // }
 
-  public addUser(userId: string): void {
-    this.db.database.ref('users').push(userId);
-  }
+  // public addUser(userId: string): void {
+  //   this.db.database.ref('users').push(userId);
+  // }
 
-  public uploadFile(event, userId, docId) {
+  public uploadFile(event: any, userId: string, docId: string) {
     const file = event.target.files[0];
     const fileId = uuid.v4();
     const filePath = `/${userId}/${fileId}`;
@@ -230,5 +231,32 @@ export class DatabaseService implements OnDestroy {
 
   public isUserExist(id: string): boolean {
     return false;
+  }
+
+  public getUserStages(): Observable<any> {
+    return this._db
+      .collection('users')
+      .doc(this.userId)
+      .collection('stages')
+      .snapshotChanges()
+      .pipe(
+        map((docArray) => {
+          debugger;
+          return docArray.map((doc) => {
+            return { ...doc.payload.doc.data(), id: doc.payload.doc.id };
+          });
+        }),
+        tap((data) => {
+          console.log(data);
+        })
+      );
+  }
+
+  public setStage(stage: IStage) {
+    this._db
+      .collection('users')
+      .doc(this.userId)
+      .collection('stages')
+      .add({ stage: stage });
   }
 }

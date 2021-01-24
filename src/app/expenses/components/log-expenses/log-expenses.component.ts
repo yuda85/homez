@@ -166,7 +166,7 @@ export class LogExpensesComponent implements OnInit, OnDestroy {
 
   public onCategoryEntered(data: MatChipInputEvent) {
     const valueTrimmed = data.value.trim();
-    const newCategory = { value: data.value, removable: true, id: null };
+    const newCategory = { value: data.value, removable: true, id: '' };
     const matchingCategory = find(
       this.categories,
       (c) =>
@@ -174,8 +174,8 @@ export class LogExpensesComponent implements OnInit, OnDestroy {
         c.value.toLowerCase() === valueTrimmed.toLowerCase()
     );
     if (!matchingCategory) {
-      this.categories.push({ value: data.value, removable: true, id: null });
-      data.input.value = null;
+      this.categories.push({ value: data.value, removable: true, id: '' });
+      data.input.value = '';
       debugger;
       this.expensesService.setExpensesCategories(this.userId, [newCategory]);
       this.penSnackBar('קטגוריה נשמרה');

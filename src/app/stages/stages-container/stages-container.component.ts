@@ -20,6 +20,7 @@ export class StagesContainerComponent implements OnInit {
 
   ngOnInit(): void {
     this.setStage();
+    this.stageService.setStages();
   }
 
   private setStage() {
