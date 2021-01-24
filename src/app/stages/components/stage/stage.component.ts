@@ -1,10 +1,18 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  SimpleChange,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
 import { NgForm } from '@angular/forms';
 import {
   IStage,
   StageItem,
   StageItemTodo,
 } from '../../models/stage-item.interface';
+import { StagesService } from '../../steges.service';
 
 @Component({
   selector: 'app-stage',
@@ -21,9 +29,13 @@ export class StageComponent implements OnInit {
   public existingStageNameError: boolean = false;
   public isAddStageItemActive: boolean = false;
 
-  constructor() {}
+  constructor(private stageService: StagesService) {}
 
   ngOnInit(): void {}
+
+  ngOnChanges(changes: SimpleChanges) {
+    console.log(changes);
+  }
 
   public addTodo(itemIndex: number): void {
     this.currentStage.stageItems[itemIndex].isTodoFormActive = true;
@@ -48,6 +60,7 @@ export class StageComponent implements OnInit {
     if (!isTodoExist) {
       this.currentStage.stageItems[stageItemIndx].todos.push(newTodo);
       this.calculateTodosProgress(stageItemIndx);
+      this.stageService.updateStage(this.currentStage);
       this.todoForm.reset();
     }
   }

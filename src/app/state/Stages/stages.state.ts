@@ -4,7 +4,7 @@ import { DatabaseService } from '../../core/database.service';
 import { StageType } from '../../stages/models';
 import { IStage } from '../../stages/models/stage-item.interface';
 import { BaseStages } from '../../stages/stages.helper';
-import { SetStages } from './stages.actions';
+import { SetStages, UpdateStage } from './stages.actions';
 import { StagesStateModel } from './stages.model';
 @Injectable({
   providedIn: 'root',
@@ -42,10 +42,11 @@ export class StagesState {
   setStages(ctx: StateContext<StagesStateModel>) {
     //check if user has stages
     this._db.getUserStages().subscribe((data) => {
+      debugger;
       if (data.length) {
         data.forEach((stageItem) => {
           ctx.patchState({
-            [stageItem.stage.type]: { ...stageItem.stage, id: stageItem.id },
+            [stageItem.type]: { ...stageItem, id: stageItem.id },
           });
         });
       } else {
@@ -54,5 +55,13 @@ export class StagesState {
         });
       }
     });
+  }
+
+  @Action(UpdateStage)
+  updateStage(ctx: StateContext<StagesStateModel>, payload: any) {
+    ctx.patchState({
+      [payload.type]: { ...payload },
+    });
+    this._db.updateStage(payload.payload);
   }
 }

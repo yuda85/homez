@@ -27,6 +27,7 @@ export class StagesContainerComponent implements OnInit {
     const activeStage = this.route.snapshot.routeConfig.path;
 
     this.stageService.getStage(activeStage as StageType).subscribe((data) => {
+      console.log(data);
       this.currentStage = data;
     });
   }

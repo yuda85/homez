@@ -247,11 +247,20 @@ export class DatabaseService implements OnDestroy {
       );
   }
 
-  public setStage(stage: IStage) {
+  public setStage(stage: IStage): void {
     this._db
       .collection('users')
       .doc(this.userId)
       .collection('stages')
-      .add({ stage: stage });
+      .add(stage);
+  }
+
+  public updateStage(stage: IStage) {
+    this._db
+      .collection('users')
+      .doc(this.userId)
+      .collection('stages')
+      .doc(stage.id)
+      .update(stage);
   }
 }

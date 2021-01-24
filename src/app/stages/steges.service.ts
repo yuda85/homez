@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { DatabaseService } from '../core/database.service';
-import { SetStages } from '../state/Stages/stages.actions';
+import { SetStages, UpdateStage } from '../state/Stages/stages.actions';
 import { StagesStateSelectors } from '../state/Stages/stages.selectors';
 import { StageType } from './models';
 import { IStage, StageItemTodo } from './models/stage-item.interface';
@@ -19,5 +19,10 @@ export class StagesService {
 
   public setStages(): void {
     this.store.dispatch(new SetStages());
+  }
+
+  public updateStage(stage: IStage) {
+    debugger;
+    this.store.dispatch(new UpdateStage(stage));
   }
 }
